@@ -20,6 +20,11 @@ Website Features:
 - View API usage graphs
 - Stripe Checkout integration
 
+Must include documentation for self-maintenance.
+
 ## Desired
 
-- Built with View.js but React or Angular would suffice
+- Built with Vue.js but React or Angular would suffice
+- A CSS framework using or similar to Bootstrap
+
+It shouldn't be a copy of the existing account portal. That was my best attempt with no frontend design chops.
