@@ -28,3 +28,26 @@ Must include documentation for self-maintenance.
 - Integrate existing brand logos and color theme
 
 It shouldn't be a copy of the existing landing page or account portal. These were my best attempts with no frontend design skills.
+
+## Project setup
+```
+npm install
+```
+
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
+
+### Compiles and minifies for production
+```
+npm run build
+```
+
+### Lints and fixes files
+```
+npm run lint
+```
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
