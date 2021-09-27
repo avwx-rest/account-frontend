@@ -1,23 +1,15 @@
-<template>
-    <div class="home">
-        <h1>Login</h1>
-        <LoginForm />
-    </div>
-</template>
-
 <script lang="ts">
 import { Options, Vue } from "vue-class-component"
-import LoginForm from "@/components/LoginForm.vue"
 
-@Options({
-    components: {
-        LoginForm,
-    },
-})
+@Options({})
 export default class Home extends Vue {
     public created(): void {
         if (this.loggedIn) {
-            this.$router.push('/about')
+            this.$store.dispatch('auth/logout').then(
+                this.$router.push('/')
+            )
+        } else {
+            this.$router.push('/')
         }
     }
     
