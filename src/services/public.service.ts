@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Login, RefreshToken } from '@/models/auth'
 
-export default class PublicApi {
+class PublicApi {
     root = 'https://avwx-account-dev.azurewebsites.net/'
 
     public async login(form: Login): Promise<RefreshToken> {
@@ -9,7 +9,7 @@ export default class PublicApi {
         console.log("Got data")
         console.log(data)
         if (data.data.access_token) {
-            localStorage.setItem('auth', JSON.stringify(data))
+            localStorage.setItem('auth', JSON.stringify(data.data))
         }
         return data.data
     }
@@ -18,3 +18,6 @@ export default class PublicApi {
         localStorage.removeItem('auth')
     }
 }
+
+const api = new PublicApi()
+export default api

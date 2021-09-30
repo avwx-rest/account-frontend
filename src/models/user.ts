@@ -32,3 +32,13 @@ export interface User extends UserUpdate {
     addons: Addon[]
     notifications: Notification[]
 }
+
+export const emptyUser: User = {
+    email: "",
+    allow_overage: false,
+    disabled: false,
+    subscribed: false,
+    addons: [],
+    notifications: [],
+    tokens: [],
+}

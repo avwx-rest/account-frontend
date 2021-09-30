@@ -13,8 +13,6 @@ export interface State {
     user?: User
 }
 
-const publicApi = new PublicApi()
-
 function makeInitialState(): State {
     let auth, user
     const authString = localStorage.getItem("auth")
@@ -38,7 +36,7 @@ export const auth = {
         async login({ commit }: { commit: Commit }, form: Login): Promise<void> {
             console.log("Calling login")
             console.log(form)
-            const auth = await publicApi.login(form)
+            const auth = await PublicApi.login(form)
             console.log("Got login")
             console.log(auth)
             commit('loginSuccess', auth)
@@ -46,7 +44,7 @@ export const auth = {
             // else  commit('loginFailure')
         },
         logout({ commit }: { commit: Commit }): void {
-            publicApi.logout()
+            PublicApi.logout()
             commit('logout')
         },
     },

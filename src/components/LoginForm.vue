@@ -70,7 +70,7 @@ export default class LoginForm extends Vue {
         console.log(creds)
         this.$store.dispatch('auth/login', creds).then(
             () => {
-                this.$router.push("/about")
+                this.$router.push("/")
             },
             (error: Error | AxiosError) => {
                 console.log(error)
