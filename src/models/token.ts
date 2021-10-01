@@ -1,8 +1,11 @@
-export interface Token {
+export interface TokenUpdate {
     name: string
+    active: boolean
+}
+
+export interface Token extends TokenUpdate {
     type: string
     value: string
-    active: boolean
 }
 
 export interface TokenUsage {

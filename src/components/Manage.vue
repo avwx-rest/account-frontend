@@ -1,8 +1,9 @@
 <template>
     <div>
         <div v-if="userLoaded">
-            <b>Current Plan</b>: {{user.plan.name}} at <b>${{user.plan.price}}</b> / month & <b>{{user.plan.limit/1000}}k</b> calls / day
+            <Plan v-bind:plan="user.plan" />
         </div>
+        <TokenList />
     </div>
 </template>
 
@@ -10,8 +11,15 @@
 import { User, emptyUser } from '@/models/user';
 import { Options, Vue } from 'vue-class-component'
 import AuthApi from '@/services/auth.service'
+import Plan from './Plan.vue'
+import TokenList from './TokenList.vue'
 
-@Options({})
+@Options({
+    components: {
+        Plan,
+        TokenList,
+    }
+})
 export default class Manage extends Vue {
     user: User = emptyUser
 
