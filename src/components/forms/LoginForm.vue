@@ -36,10 +36,6 @@
         <div v-if="errortext.length > 0">
             <p>{{ errortext }}</p>
         </div>
-        <div class="input-field col s8">
-            <router-link to="/register" class="btn-flat white-text">New Here? Register</router-link>&nbsp;
-            <router-link to="/user/forgot-password" class="btn-flat white-text">Forgot your Password?</router-link>
-        </div>
     </div>
 </template>
 

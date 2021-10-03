@@ -1,7 +1,8 @@
 import { Commit } from "vuex"
 import { User } from "@/models/user"
 import { Login, RefreshToken } from "@/models/auth"
-import PublicApi from "@/services/public.service"
+import AuthApi from "@/services/auth.service"
+import RegisterApi from "@/services/register.service"
 
 export interface Status {
     loggedIn: boolean
@@ -33,10 +34,20 @@ export const auth = {
     namespaced: true,
     state: makeInitialState(),
     actions: {
+        async register({ commit }: { commit: Commit }, form: Login): Promise<void> {
+            console.log("Calling register")
+            console.log(form)
+            const auth = await RegisterApi.register(form)
+            console.log("Got register")
+            console.log(auth)
+            commit('registerSuccess', auth)
+
+            // else  commit('registerFailure')
+        },
         async login({ commit }: { commit: Commit }, form: Login): Promise<void> {
             console.log("Calling login")
             console.log(form)
-            const auth = await PublicApi.login(form)
+            const auth = await AuthApi.login(form)
             console.log("Got login")
             console.log(auth)
             commit('loginSuccess', auth)
@@ -44,12 +55,18 @@ export const auth = {
             // else  commit('loginFailure')
         },
         logout({ commit }: { commit: Commit }): void {
-            PublicApi.logout()
+            AuthApi.logout()
             commit('logout')
         },
     },
 
     mutations: {
+        registerSuccess(state: State, user: User): void {
+            console.log("In success")
+            console.log(user)
+            state.status.loggedIn = false
+            state.user = user
+        },
         loginSuccess(state: State, auth: RefreshToken): void {
             console.log("In success")
             console.log(auth)

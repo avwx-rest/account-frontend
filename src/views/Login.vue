@@ -1,13 +1,13 @@
 <template>
-    <div class="home">
-        <h1>Login</h1>
-        <LoginForm />
-    </div>
+    <h1>Login</h1>
+    <LoginForm />
+    <router-link to="/register" class="btn-flat white-text">New Here? Register</router-link>&nbsp;
+    <router-link to="/user/forgot-password" class="btn-flat white-text">Forgot your Password?</router-link>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component"
-import LoginForm from "@/components/LoginForm.vue"
+import LoginForm from "@/components/forms/LoginForm.vue"
 
 @Options({
     components: {

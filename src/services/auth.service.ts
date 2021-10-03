@@ -1,41 +1,21 @@
 import axios from 'axios'
-import { RefreshToken } from '@/models/auth'
-import { User } from '@/models/user'
-import { Token } from '@/models/token'
+import { Login, RefreshToken } from '@/models/auth'
 
-class AuthApi {
-    root = 'https://avwx-account-dev.azurewebsites.net/'
+import AccountApi from './account-api'
 
-    get authHeaders(): { [key: string]: string } {
-        const authString = localStorage.getItem('auth')
-        if (!authString) return {}
-        const auth: RefreshToken = JSON.parse(authString)
-        console.log(auth.access_token)
-        return { Authorization: 'Bearer ' + auth.access_token }
-    }
-
-    public async getUser(): Promise<User> {
-        const data = await axios.get<User>(this.root+'user', { headers: this.authHeaders })
-        console.log("Got user")
+class AuthApi extends AccountApi {
+    public async login(form: Login): Promise<RefreshToken> {
+        const data = await axios.post<RefreshToken>(this.root+'auth/login', form)
+        console.log("Got data")
         console.log(data)
-        if (data.data.email) {
-            localStorage.setItem('user', JSON.stringify(data.data))
+        if (data.data.access_token) {
+            localStorage.setItem('auth', JSON.stringify(data.data))
         }
         return data.data
     }
 
-    public async getTokens(): Promise<Token[]> {
-        const data = await axios.get<Token[]>(this.root+'token', { headers: this.authHeaders })
-        console.log("Got tokens")
-        console.log(data)
-        return data.data
-    }
-
-    public async newToken(): Promise<Token> {
-        const data = await axios.post<Token>(this.root+'token', null, { headers: this.authHeaders })
-        console.log("Got new token")
-        console.log(data)
-        return data.data
+    public logout(): void {
+        localStorage.removeItem('auth')
     }
 }
 

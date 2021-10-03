@@ -4,10 +4,20 @@ import {
     faCheckCircle,
     faEdit,
     faHistory,
+    faMinusCircle,
     faSyncAlt,
-    faTimesCircle
+    faTimesCircle,
+    faTrash,
 } from "@fortawesome/free-solid-svg-icons"
 
-library.add(faCheckCircle, faEdit, faHistory, faSyncAlt, faTimesCircle)
+library.add(
+    faCheckCircle,
+    faEdit,
+    faHistory,
+    faMinusCircle,
+    faSyncAlt,
+    faTimesCircle,
+    faTrash,
+)
 
 export { FontAwesomeIcon }

@@ -12,7 +12,7 @@
 
         <tbody>
             <tr v-for="token in tokens" :key="token" v-show="tokens.length > 0">
-                <TokenRow v-bind:token="token" />
+                <TokenRow v-bind:token="token" @reload="fetchTokens" />
             </tr>
         </tbody>
     </table>
@@ -22,7 +22,7 @@
 import { Options, Vue } from 'vue-class-component'
 import TokenRow from './TokenRow.vue'
 import { Token } from '@/models/token'
-import AuthApi from '@/services/auth.service'
+import TokenApi from '@/services/token.service'
 
 @Options({
     components: {
@@ -31,17 +31,16 @@ import AuthApi from '@/services/auth.service'
 })
 export default class TokenList extends Vue {
     tokens: Token[] = []
-    editTokenForm = false
 
     public fetchTokens(): void {
-        AuthApi.getTokens().then((tokens) => {
+        TokenApi.getTokens().then((tokens) => {
             this.tokens = tokens
         })
     }
 
     public newToken(): void {
         console.log("New token")
-        AuthApi.newToken().then((token) => {
+        TokenApi.newToken().then((token) => {
             console.log("Got new token")
             this.tokens.push(token)
         })

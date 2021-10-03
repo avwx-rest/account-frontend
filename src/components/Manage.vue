@@ -10,7 +10,7 @@
 <script lang="ts">
 import { User, emptyUser } from '@/models/user';
 import { Options, Vue } from 'vue-class-component'
-import AuthApi from '@/services/auth.service'
+import UserApi from '@/services/user.service'
 import Plan from './Plan.vue'
 import TokenList from './TokenList.vue'
 
@@ -33,7 +33,7 @@ export default class Manage extends Vue {
 
     public created(): void {
         if (this.storedUser) this.user = this.storedUser
-        AuthApi.getUser().then(
+        UserApi.getUser().then(
             user => this.user = user,
             (error) => {
                 if (error.response.data.detail == "Signature has expired") {
