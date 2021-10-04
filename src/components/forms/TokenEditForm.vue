@@ -1,12 +1,12 @@
 <template>
-    <Form @submit="updateToken" :validation-schema="schema" v-slot="{ values }">
+    <Form @submit="updateToken" :validation-schema="schema">
         <td>
             <Field name="name" type="text" v-model="form.name"/>
-            <ErrorMessage name="name"></ErrorMessage>
+            <ErrorMessage name="name" />
         </td>
         <td>
             <Field name="active" type="checkbox" v-model="form.active" :value="true" />
-            <ErrorMessage name="active"></ErrorMessage>
+            <ErrorMessage name="active" />
         </td>
         <td>{{ token.value }}</td>
         <td>
@@ -14,7 +14,6 @@
             <button @click="cancel"><font-awesome-icon icon="times-circle" /></button>
             <button @click="deleteToken" :disabled="isSubmitting"><font-awesome-icon icon="trash" /></button>
         </td>
-        <pre>{{ values }}</pre>
     </Form>
 </template>
 

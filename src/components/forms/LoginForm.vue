@@ -1,64 +1,42 @@
 <template>
-    <div class="container">
-        <Form @submit="handleLogin" :validation-schema="schema" class="mt-100">
-            <div class="input-field col s8">
-                <Field
-                    name="email"
-                    type="email"
-                    id="email"
-                    class="white-text validate"
-                />
-                <label for="email" class="white-text">Email</label>
-                <span class="helper-text" data-error="Email invalid"></span>
-            </div>
-            <div class="input-field col s8">
-                <Field
-                    name="password"
-                    type="password"
-                    id="password"
-                    class="white-text"
-                />
-                <label for="password" class="white-text">Password</label>
-                <span class="helper-text" data-error="Password invalid"></span>
-            </div>
-            <div class="input-field col s8">
-                <p>
-                    <label>
-                        <input type="checkbox" class="white-text" />
-                        <span class="white-text">Remember me</span>
-                    </label>
-                </p>
-            </div>
-            <div class="input-field col s8">
-                <button class="btn login-btn" type="submit" name="action">Login</button>
-            </div>
-        </Form>
+    <Form @submit="handleLogin" :validation-schema="schema">
+        <div>
+            <Field name="email" type="email" id="email" />
+            <label for="email">Email</label>
+            <ErrorMessage name="email" />
+        </div>
+        <div>
+            <Field name="password" type="password" id="password" />
+            <label for="password">Password</label>
+            <ErrorMessage name="password" />
+        </div>
         <div v-if="errortext.length > 0">
             <p>{{ errortext }}</p>
         </div>
-    </div>
+        <div>
+            <button type="submit" name="action">Login</button>
+        </div>
+    </Form>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import { Field, Form } from 'vee-validate'
+import { Field, Form, ErrorMessage } from 'vee-validate'
 import axios, { AxiosError } from 'axios'
 import * as yup from 'yup'
-// import YupPassword from 'yup-password'
 import { Login as LoginData } from '@/models/auth'
-
-// YupPassword(yup) // reserve for registration
 
 @Options({
     components: {
         Form,
         Field,
+        ErrorMessage,
     }
 })
 export default class LoginForm extends Vue {
     errortext = ''
     schema = yup.object().shape({
-        email: yup.string().email().required('Email is required'),
+        email: yup.string().email('Not a valid email').required('Email is required'),
         password: yup.string().required('Password is required'),
     })
 

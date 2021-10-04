@@ -1,14 +1,14 @@
 <template>
     <Form @submit="register" :validation-schema="schema">
         <div>
-            <Field name="email" type="email" id="email" class="white-text validate"/>
-            <label for="email" class="white-text">Email</label>
-            <ErrorMessage name="email"></ErrorMessage>
+            <Field name="email" type="email" id="email" />
+            <label for="email">Email</label>
+            <ErrorMessage name="email" />
         </div>
         <div>
-            <Field name="password" type="password" id="password" class="white-text" />
-            <label for="password" class="white-text">Password</label>
-            <ErrorMessage name="password"></ErrorMessage>
+            <Field name="password" type="password" id="password" />
+            <label for="password">Password</label>
+            <ErrorMessage name="password" />
         </div>
         <div>
             <button type="submit" name="action" :disabled="isSubmitting">Sign Up</button>
@@ -22,7 +22,10 @@ import { Form, Field, ErrorMessage } from 'vee-validate'
 import { useToast } from 'vue-toastification'
 import axios, { AxiosError } from 'axios'
 import * as yup from 'yup'
+import YupPassword from 'yup-password'
 import { Login } from '@/models/auth'
+
+YupPassword(yup)
 
 @Options({
     components: {
@@ -36,14 +39,8 @@ export default class RegisterForm extends Vue {
     errorText = ""
 
     schema = yup.object().shape({
-        email: yup
-            .string()
-            .required("Email is required")
-            .email("Email is invalid"),
-        password: yup
-            .string()
-            .required("Password is required")
-            .min(8, "Must be at least 8 characters"),
+        email: yup.string().email('Not a valid email').required("Email is required"),
+        password: yup.string().password().required("Password is required"),
     })
     toast = useToast()
 
