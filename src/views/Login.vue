@@ -1,8 +1,8 @@
 <template>
     <h1>Login</h1>
     <LoginForm />
-    <router-link to="/register" class="btn-flat white-text">New Here? Register</router-link>&nbsp;
-    <router-link to="/user/forgot-password" class="btn-flat white-text">Forgot your Password?</router-link>
+    <router-link to="/register">New Here? Register</router-link>&nbsp;
+    <router-link to="/forgot-password">Forgot your Password?</router-link>
 </template>
 
 <script lang="ts">
