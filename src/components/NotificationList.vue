@@ -1,15 +1,17 @@
 <template>
-    <button @click="showList = !showList"><font-awesome-icon icon="bell" /> {{ notifications.length }}</button>
-    <div v-if="showList">
-        <p v-show="notifications.length == 0">No Notifications</p>
-        <NotificationRow v-for="notification in notifications" :key="notification" v-bind:notification="notification" @reload="update" />
+    <div>
+        <button @click="showList = !showList"><font-awesome-icon icon="bell" /> {{ notifications.length }}</button>
+        <div v-if="showList">
+            <p v-show="notifications.length == 0">No Notifications</p>
+            <NotificationRow v-for="notification in notifications" :key="notification" v-bind:notification="notification" @reload="update" />
+        </div>
     </div>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import NotificationRow from '@/components/NotificationRow.vue'
-import { Notification } from '@/models/user'
+import { UserNotification } from '@/models/user'
 import UserApi from '@/services/user.service'
 
 @Options({
@@ -18,7 +20,7 @@ import UserApi from '@/services/user.service'
     }
 })
 export default class NotificationList extends Vue {
-    notifications: Notification[] = []
+    notifications: UserNotification[] = []
     showList = false
 
     public mounted(): void {

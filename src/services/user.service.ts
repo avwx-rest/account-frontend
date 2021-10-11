@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Notification, User } from '@/models/user'
+import { UserNotification, User } from '@/models/user'
 import AccountApi from './account-api'
 
 class UserApi extends AccountApi {
@@ -13,14 +13,14 @@ class UserApi extends AccountApi {
         return data.data
     }
 
-    public async getNotifications(): Promise<Notification[]> {
-        const data = await axios.get<Notification[]>(this.root+'notification', { headers: this.authHeaders })
+    public async getNotifications(): Promise<UserNotification[]> {
+        const data = await axios.get<UserNotification[]>(this.root+'notification', { headers: this.authHeaders })
         console.log('Got notifications')
         console.log(data)
         return data.data
     }
 
-    public async deleteNotification(notification: Notification): Promise<void> {
+    public async deleteNotification(notification: UserNotification): Promise<void> {
         const url = this.root+'notification/' + notification.id
         console.log(url)
         const data = await axios.delete<void>(url, { headers: this.authHeaders })

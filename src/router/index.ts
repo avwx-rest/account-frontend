@@ -35,6 +35,11 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Forgot Password',
     component: () => import(/* webpackChunkName: "forgot-password" */ '../views/ForgotPassword.vue')
   },
+  {
+    path: '/plans',
+    name: 'Plans',
+    component: () => import(/* webpackChunkName: "plans" */ '../views/Plans.vue')
+  },
 ]
 
 const router = createRouter({

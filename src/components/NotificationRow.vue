@@ -7,19 +7,20 @@
 </template>
 
 <script lang="ts">
+import { PropType } from 'vue'
 import { Options, Vue } from 'vue-class-component'
 import { formatDistanceToNowStrict } from 'date-fns'
-import { Notification } from '@/models/user'
+import { UserNotification } from '@/models/user'
 import UserApi from '@/services/user.service'
 
 @Options({
     props: {
-        notification: Notification
+        notification: { type: Object as PropType<UserNotification> },
     },
     emits: ['reload'],
 })
 export default class NotificationRow extends Vue {
-    notification!: Notification
+    notification!: UserNotification
 
     get displayDate(): string {
         return formatDistanceToNowStrict(Date.parse(this.notification.timestamp), { addSuffix: true })

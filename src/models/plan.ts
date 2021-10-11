@@ -8,3 +8,16 @@ export interface Plan {
     limit: number
     overage: boolean
 }
+
+interface FeatureLink {
+    text: string
+    link?: string
+}
+
+export interface PlanDisplayData {
+    preface?: string
+    yearly?: number
+    links: FeatureLink[]
+}
+
+export interface PlanData extends Plan, PlanDisplayData {}

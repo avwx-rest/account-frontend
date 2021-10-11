@@ -1,22 +1,22 @@
 <template>
     <div>
         <div v-if="userLoaded">
-            <Plan v-bind:plan="user.plan" />
+            <CurrentPlan v-bind:plan="user.plan" />
         </div>
         <TokenList />
     </div>
 </template>
 
 <script lang="ts">
-import { User, emptyUser } from '@/models/user';
+import { User, emptyUser } from '@/models/user'
 import { Options, Vue } from 'vue-class-component'
 import UserApi from '@/services/user.service'
-import Plan from './Plan.vue'
+import CurrentPlan from './CurrentPlan.vue'
 import TokenList from './TokenList.vue'
 
 @Options({
     components: {
-        Plan,
+        CurrentPlan,
         TokenList,
     }
 })
@@ -37,8 +37,8 @@ export default class Manage extends Vue {
             user => this.user = user,
             (error) => {
                 if (error.response.data.detail == "Signature has expired") {
-                    this.$store.dispatch('auth/logout');
-                    this.$router.push('/login');
+                    this.$store.dispatch('auth/logout')
+                    this.$router.push('/login')
                 }
             }
         )

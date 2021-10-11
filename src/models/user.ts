@@ -1,13 +1,13 @@
-import { Addon } from "./addon";
-import { Plan } from "./plan";
-import { Token } from "./token";
+import { Addon } from "./addon"
+import { Plan } from "./plan"
+import { Token } from "./token"
 
 export interface Stripe {
     customer_id: string
     subscription_id: string
 }
 
-export interface Notification {
+export interface UserNotification {
     id: string
     type: string
     text: string
@@ -30,7 +30,7 @@ export interface User extends UserUpdate {
     plan?: Plan
     tokens: Token[]
     addons: Addon[]
-    notifications: Notification[]
+    notifications: UserNotification[]
 }
 
 export const emptyUser: User = {
