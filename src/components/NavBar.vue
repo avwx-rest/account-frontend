@@ -19,7 +19,7 @@ import NotificationList from '@/components/NotificationList.vue'
 })
 export default class NavBar extends Vue {
     get loggedIn(): boolean {
-        return this.$store.state.auth.status.loggedIn
+        return this.$store.state.auth.loggedIn
     }
 }
 </script>

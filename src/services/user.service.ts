@@ -7,9 +7,6 @@ class UserApi extends AccountApi {
         const data = await axios.get<User>(this.root+'user', { headers: this.authHeaders })
         console.log("Got user")
         console.log(data)
-        if (data.data.email) {
-            localStorage.setItem('user', JSON.stringify(data.data))
-        }
         return data.data
     }
 

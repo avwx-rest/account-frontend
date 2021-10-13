@@ -12,7 +12,6 @@
 import { Options, Vue } from 'vue-class-component'
 import NotificationRow from '@/components/NotificationRow.vue'
 import { UserNotification } from '@/models/user'
-import UserApi from '@/services/user.service'
 
 @Options({
     components: {
@@ -20,18 +19,14 @@ import UserApi from '@/services/user.service'
     }
 })
 export default class NotificationList extends Vue {
-    notifications: UserNotification[] = []
     showList = false
 
-    public mounted(): void {
-        this.notifications = this.$store.state.auth?.user?.notifications || []
+    get notifications(): UserNotification[] {
+        return this.$store.state.user.notifications
     }
 
     public update(): void {
-        UserApi.getNotifications().then(
-            (notifications) => this.notifications = notifications,
-            (error) => console.log(error),
-        )
+        this.$store.dispatch('getNotifications')
     }
 }
 </script>

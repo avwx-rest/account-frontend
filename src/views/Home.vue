@@ -19,7 +19,7 @@ import Manage from '@/components/Manage.vue'
 })
 export default class Home extends Vue {
     get loggedIn(): boolean {
-        return this.$store.state.auth.status.loggedIn
+        return this.$store.state.auth.loggedIn
     }
 }
 </script>

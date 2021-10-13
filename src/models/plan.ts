@@ -21,3 +21,5 @@ export interface PlanDisplayData {
 }
 
 export interface PlanData extends Plan, PlanDisplayData {}
+
+export type PlanMap = { [key: string]: PlanData }

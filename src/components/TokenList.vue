@@ -22,7 +22,6 @@
 import { Options, Vue } from 'vue-class-component'
 import TokenRow from './TokenRow.vue'
 import { Token } from '@/models/token'
-import TokenApi from '@/services/token.service'
 
 @Options({
     components: {
@@ -30,20 +29,16 @@ import TokenApi from '@/services/token.service'
     },
 })
 export default class TokenList extends Vue {
-    tokens: Token[] = []
+    get tokens(): Token[] {
+        return this.$store.state.user.tokens
+    }
 
     public fetchTokens(): void {
-        TokenApi.getTokens().then((tokens) => {
-            this.tokens = tokens
-        })
+        this.$store.dispatch('user/getTokens')
     }
 
     public newToken(): void {
-        console.log("New token")
-        TokenApi.newToken().then((token) => {
-            console.log("Got new token")
-            this.tokens.push(token)
-        })
+        this.$store.dispatch('user/newToken')
     }
 
     public mounted(): void {

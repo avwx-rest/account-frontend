@@ -34,7 +34,7 @@ export default class Plans extends Vue {
     plan!: PlanData
 
     get loggedIn(): boolean {
-        return this.$store.state.auth.status.loggedIn
+        return this.$store.state.auth.loggedIn
     }
 
     get userPlan(): Plan {
