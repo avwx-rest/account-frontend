@@ -1,4 +1,4 @@
-import { Commit } from "vuex"
+import { Commit, Module } from "vuex"
 import { User, UserNotification } from "@/models/user"
 import TokenApi from '@/services/token.service'
 import UserApi from '@/services/user.service'
@@ -34,7 +34,7 @@ function makeInitialState(): UserState {
     }
 }
 
-export const user = {
+export const user: Module<UserState, any> = {
     namespaced: true,
     state: makeInitialState(),
     actions: {

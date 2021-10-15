@@ -1,4 +1,4 @@
-import { Commit } from 'vuex'
+import { Commit, Module } from 'vuex'
 import { PLANS } from '@/data/plans'
 import PlanApi from '@/services/plan.service'
 import { Plan, PlanMap } from "@/models/plan"
@@ -35,7 +35,7 @@ function expandPlans(plans: Plan[]): PlanMap {
     return out
 }
 
-export const publicdata = {
+export const publicdata: Module<PublicState, any> = {
     namespaced: true,
     state: makeInitialState(),
     actions: {

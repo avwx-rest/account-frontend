@@ -3,12 +3,15 @@ import Toast, { PluginOptions as ToastOptions, POSITION } from 'vue-toastificati
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import setupAuthInterceptors from '@/services/setupInterceptors'
 import { FontAwesomeIcon } from './plugins/font-awesome'
 import 'vue-toastification/dist/index.css'
 
 const toastDefaults: ToastOptions = {
     position: POSITION.TOP_RIGHT,
 }
+
+setupAuthInterceptors()
 
 createApp(App)
     .use(store)
