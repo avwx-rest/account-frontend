@@ -26,7 +26,7 @@ export default class NotificationList extends Vue {
     }
 
     public update(): void {
-        this.$store.dispatch('getNotifications')
+        this.$store.dispatch('user/getNotifications')
     }
 }
 </script>

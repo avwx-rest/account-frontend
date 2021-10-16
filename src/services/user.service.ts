@@ -15,6 +15,11 @@ class UserApi {
     public async deleteNotification(notification: UserNotification): Promise<void> {
         await axios.delete<void>('notification/' + notification.id)
     }
+
+    public async stripeSuccess(success: boolean): Promise<void> {
+        const route = success ? 'success' : 'cancel'
+        await axios.get<void>('stripe/' + route)
+    }
 }
 
 const api = new UserApi()

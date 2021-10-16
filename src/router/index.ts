@@ -40,6 +40,18 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Plans',
     component: () => import(/* webpackChunkName: "plans" */ '../views/Plans.vue')
   },
+  {
+    path: '/stripe/success',
+    name: 'StripeSuccess',
+    component: () => import(/* webpackChunkName: "stripe" */ '../views/Stripe.vue'),
+    props: { success: true }
+  },
+  {
+    path: '/stripe/cancel',
+    name: 'StripeCancel',
+    component: () => import(/* webpackChunkName: "stripe" */ '../views/Stripe.vue'),
+    props: { success: false }
+  },
 ]
 
 const router = createRouter({

@@ -4,7 +4,7 @@ import { Token } from "./token"
 
 export interface Stripe {
     customer_id: string
-    subscription_id: string
+    subscription_id?: string
 }
 
 export interface UserNotification {

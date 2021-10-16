@@ -1,7 +1,7 @@
 <template>
-    <PlanDetail v-if="plans['free']" v-bind:plan="plans['free']" />
-    <PlanDetail v-if="plans['pro']" v-bind:plan="plans['pro']" />
-    <PlanDetail v-if="plans['enterprise']" v-bind:plan="plans['enterprise']" />
+    <div v-for="key in keys" :key="key">
+        <PlanDetail v-if="plans[key]" v-bind:plan="plans[key]" @reloadUser="reloadUser" />
+    </div>
 </template>
 
 <script lang="ts">
@@ -15,12 +15,18 @@ import { PlanMap } from '@/models/plan'
     },
 })
 export default class PlanList extends Vue {
+    keys = ['free', 'pro', 'enterprise']
+
     get plans(): PlanMap {
         return this.$store.state.publicdata.plans
     }
     
     public mounted(): void {
         this.$store.dispatch('publicdata/getPlans')
+    }
+
+    public reloadUser(): void {
+        this.$store.dispatch('user/getUser')
     }
 }
 </script>

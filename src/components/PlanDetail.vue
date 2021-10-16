@@ -12,7 +12,7 @@
     </ul>
     <div v-if="loggedIn">
         <div v-if="userPlan && userPlan.key == plan.key">Current Plan</div>
-        <button v-else @click="switchPlan()">Start Monthly</button>
+        <button v-else @click="switchPlan()">{{ plan.key == 'free' ? 'Cancel Plan' : 'Start Monthly' }}</button>
         <div v-if="userPlan && userPlan.key == plan.key+'-year'">Current Plan</div>
         <button v-else-if="plan.key != 'free'" @click="switchPlan('-year')" href="#">Start Yearly</button>
     </div>
@@ -28,7 +28,8 @@ import PlanApi from '@/services/plan.service'
 @Options({
     props: {
         plan: { type: Object as PropType<PlanData> }
-    }
+    },
+    emits: ['reloadUser'],
 })
 export default class Plans extends Vue {
     plan!: PlanData
@@ -38,7 +39,7 @@ export default class Plans extends Vue {
     }
 
     get userPlan(): Plan {
-        return this.$store.state.auth.user?.plan
+        return this.$store.state.user.plan
     }
 
     get monthlyPrice(): string {
@@ -67,14 +68,15 @@ export default class Plans extends Vue {
     public switchPlan(postfix?: string): void {
         let key = this.plan.key
         if (postfix) key += postfix
-        console.log(key)
-        let newWindow = window.open()
+        let newWindow: Window | null
+        if (!this.$store.state.user.user?.stripe?.subscription_id) newWindow = window.open()
         PlanApi.changePlan(key).then(
             (url) => {
-                console.log("Opening checkout url")
-                console.log(url)
-                console.log(newWindow)
-                if (newWindow) newWindow.location.href = url
+                if (url && newWindow) {
+                    newWindow.location.href = url
+                } else {
+                    this.$emit('reloadUser')
+                }
             },
             (error) => console.log(error),
         )

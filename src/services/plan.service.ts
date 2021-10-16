@@ -11,9 +11,9 @@ class PlanApi {
         return data.data
     }
 
-    public async changePlan(key: string): Promise<string> {
+    public async changePlan(key: string): Promise<string | null> {
         const data = await axios.post<StripeCheckout>('plan', { key })
-        return data.data.url
+        return data.data?.url
     }
 }
 
