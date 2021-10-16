@@ -11,9 +11,7 @@ class AuthApi {
     }
 
     public async refresh(): Promise<AccessToken> {
-        const data = await axios.post<AccessToken>('auth/refresh', null, {
-            headers: { Authorization: 'Bearer ' + this.refreshToken }
-        })
+        const data = await axios.post<AccessToken>('auth/refresh', null)
         return data.data
     }
 
