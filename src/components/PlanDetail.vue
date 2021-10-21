@@ -1,4 +1,5 @@
 <template>
+    <CancelPlanModal v-if="showCancelModal" @close="showCancelModal = false" @cancel="cancelPlan()" @change="switchPlan()" />
     <h3>{{ plan.name }}</h3>
     <h5>{{ monthlyPrice }}</h5>
     <h6 v-if="plan.yearly !== undefined">Or {{ yearlyPrice }}</h6>
@@ -12,7 +13,8 @@
     </ul>
     <div v-if="loggedIn">
         <div v-if="userPlan && userPlan.key == plan.key">Current Plan</div>
-        <button v-else @click="switchPlan()">{{ plan.key == 'free' ? 'Cancel Plan' : 'Start Monthly' }}</button>
+        <button v-else-if="plan.key == 'free'" @click="showCancelModal = true">Switch to Free</button>
+        <button v-else @click="switchPlan()">Start Monthly</button>
         <div v-if="userPlan && userPlan.key == plan.key+'-year'">Current Plan</div>
         <button v-else-if="plan.key != 'free'" @click="switchPlan('-year')" href="#">Start Yearly</button>
     </div>
@@ -24,15 +26,20 @@ import { PropType } from 'vue'
 import { Options, Vue } from 'vue-class-component'
 import { Plan, PlanData } from '@/models/plan'
 import PlanApi from '@/services/plan.service'
+import CancelPlanModal from '@/components/forms/CancelPlanModal.vue'
 
 @Options({
+    components: {
+        CancelPlanModal,
+    },
     props: {
         plan: { type: Object as PropType<PlanData> }
     },
     emits: ['reloadUser'],
 })
-export default class Plans extends Vue {
+export default class PlanDetail extends Vue {
     plan!: PlanData
+    showCancelModal = false
 
     get loggedIn(): boolean {
         return this.$store.state.auth.loggedIn
@@ -75,8 +82,19 @@ export default class Plans extends Vue {
                 if (url && newWindow) {
                     newWindow.location.href = url
                 } else {
+                    this.showCancelModal = false
                     this.$emit('reloadUser')
                 }
+            },
+            (error) => console.log(error),
+        )
+    }
+
+    public cancelPlan(): void {
+        PlanApi.cancelPlan().then(
+            () => {
+                this.showCancelModal = false
+                this.$emit('reloadUser')
             },
             (error) => console.log(error),
         )

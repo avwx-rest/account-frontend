@@ -2,14 +2,17 @@ import { Commit, Module } from 'vuex'
 import { PLANS } from '@/data/plans'
 import PlanApi from '@/services/plan.service'
 import { Plan, PlanMap } from "@/models/plan"
+import { Addon } from '@/models/addon'
 
 interface PublicState {
     plans: PlanMap
+    addons: Addon[]
 }
 
 function makeInitialState(): PublicState {
     return {
-        plans: {}
+        plans: {},
+        addons: [],
     }
 }
 
@@ -46,12 +49,26 @@ export const publicdata: Module<PublicState, any> = {
             console.log(plans)
             commit('getPlansSuccess', expandPlans(plans))
         },
+
+        async getAddons({ commit }: { commit: Commit }): Promise<void> {
+            console.log('Calling get addons')
+            const addons = await PlanApi.getAddons()
+            console.log('Got addons')
+            console.log(addons)
+            commit('getAddonsSuccess', addons)
+        },
     },
     mutations: {
         getPlansSuccess(state: PublicState, plans: PlanMap): void {
             console.log('In success')
             console.log(plans)
             state.plans = plans
+        },
+
+        getAddonsSuccess(state: PublicState, addons: Addon[]): void {
+            console.log('In success')
+            console.log(addons)
+            state.addons = addons
         }
     }
 }
