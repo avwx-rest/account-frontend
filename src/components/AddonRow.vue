@@ -2,8 +2,8 @@
     <h3>{{ addon.name }}</h3>
     <p>{{ addon.description }}</p>
     <div v-if="loggedIn">
-        <button v-if="userHasAddon" @click="removeAddon">Remove</button>
-        <button v-else @click="addAddon">Add to plan</button>
+        <button v-if="userHasAddon" @click="removeAddon" class="btn btn-primary">Remove</button>
+        <button v-else @click="addAddon" class="btn btn-primary">Add to plan</button>
     </div>
 </template>
 

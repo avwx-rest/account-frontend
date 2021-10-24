@@ -13,10 +13,10 @@
     </ul>
     <div v-if="loggedIn">
         <div v-if="userPlan && userPlan.key == plan.key">Current Plan</div>
-        <button v-else-if="plan.key == 'free'" @click="showCancelModal = true">Switch to Free</button>
-        <button v-else @click="switchPlan()">Start Monthly</button>
+        <button v-else-if="plan.key == 'free'" @click="showCancelModal = true" class="btn btn-primary">Switch to Free</button>
+        <button v-else @click="switchPlan()" class="btn btn-primary">Start Monthly</button>
         <div v-if="userPlan && userPlan.key == plan.key+'-year'">Current Plan</div>
-        <button v-else-if="plan.key != 'free'" @click="switchPlan('-year')" href="#">Start Yearly</button>
+        <button v-else-if="plan.key != 'free'" @click="switchPlan('-year')" class="btn btn-primary">Start Yearly</button>
     </div>
     
 </template>

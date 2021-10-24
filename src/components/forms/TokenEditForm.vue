@@ -10,9 +10,9 @@
         </td>
         <td>{{ token.value }}</td>
         <td>
-            <button type="submit" name="action" :disabled="isSubmitting"><font-awesome-icon icon="check-circle" /></button>
-            <button @click="cancel"><font-awesome-icon icon="times-circle" /></button>
-            <button @click="deleteToken" :disabled="isSubmitting"><font-awesome-icon icon="trash" /></button>
+            <button type="submit" name="action" :disabled="isSubmitting" class="btn btn-primary"><font-awesome-icon icon="check-circle" /></button>
+            <button @click="cancel" class="btn btn-primary"><font-awesome-icon icon="times-circle" /></button>
+            <button @click="deleteToken" :disabled="isSubmitting" class="btn btn-primary"><font-awesome-icon icon="trash" /></button>
         </td>
     </Form>
 </template>

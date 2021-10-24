@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import Home from '../views/Home.vue'
+import GettingStarted from '@/views/GettingStarted.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -8,13 +9,12 @@ const routes: Array<RouteRecordRaw> = [
     component: Home,
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
+    path: '/getting-started',
+    name: 'GettingStarted',
+    component: GettingStarted,
   },
+
+  // Account Actions
   {
     path: '/login',
     name: 'Login',
@@ -35,21 +35,42 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Forgot Password',
     component: () => import(/* webpackChunkName: "forgot-password" */ '../views/ForgotPassword.vue')
   },
+
+  // API Tokens
+  {
+    path: '/tokens',
+    name: 'Tokens',
+    component: () => import(/* webpackChunkName: "tokens" */ '../views/Tokens.vue')
+  },
+  {
+    path: '/api-usage',
+    name: 'API Usage',
+    component: () => import(/* webpackChunkName: "api-usage" */ '../views/ApiUsage.vue')
+  },
+
+  // Products
   {
     path: '/plans',
     name: 'Plans',
     component: () => import(/* webpackChunkName: "plans" */ '../views/Plans.vue')
   },
   {
+    path: '/addons',
+    name: 'Addons',
+    component: () => import(/* webpackChunkName: "addons" */ '../views/Addons.vue')
+  },
+
+  // Checkout
+  {
     path: '/stripe/success',
     name: 'StripeSuccess',
-    component: () => import(/* webpackChunkName: "stripe" */ '../views/Stripe.vue'),
+    component: () => import(/* webpackChunkName: "stripe-t" */ '../views/Stripe.vue'),
     props: { success: true }
   },
   {
     path: '/stripe/cancel',
     name: 'StripeCancel',
-    component: () => import(/* webpackChunkName: "stripe" */ '../views/Stripe.vue'),
+    component: () => import(/* webpackChunkName: "stripe-f" */ '../views/Stripe.vue'),
     props: { success: false }
   },
 ]

@@ -14,7 +14,7 @@
             <p>{{ errortext }}</p>
         </div>
         <div>
-            <button type="submit" name="action">Login</button>
+            <button type="submit" name="action" class="btn btn-primary">Login</button>
         </div>
     </Form>
 </template>

@@ -16,7 +16,7 @@
             <ErrorMessage name="confirm" />
         </div>
         <div>
-            <button type="submit" name="action" :disabled="isSubmitting">Sign Up</button>
+            <button type="submit" name="action" :disabled="isSubmitting" class="btn btn-primary">Sign Up</button>
         </div>
     </Form>
 </template>

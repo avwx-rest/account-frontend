@@ -1,5 +1,5 @@
 <template>
-    <button type="submit" name="action" @click="newToken">Add new token</button>
+    <button type="submit" name="action" @click="newToken" class="btn btn-primary">Add new token</button>
     <table>
         <thead>
             <tr>

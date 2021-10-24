@@ -11,8 +11,8 @@
 import { Plan } from '@/models/plan'
 import { User, emptyUser } from '@/models/user'
 import { Options, Vue } from 'vue-class-component'
-import CurrentPlan from './CurrentPlan.vue'
-import TokenList from './TokenList.vue'
+import CurrentPlan from '@/components/CurrentPlan.vue'
+import TokenList from '@/components/TokenList.vue'
 
 @Options({
     components: {

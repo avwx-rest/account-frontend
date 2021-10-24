@@ -10,9 +10,9 @@
         </td>
         <td>{{ token.value }}</td>
         <td>
-            <button @click="refreshToken"><font-awesome-icon icon="sync-alt" /></button>
-            <button @click="editToken"><font-awesome-icon icon="edit" /></button>
-            <button @click="history"><font-awesome-icon icon="history" /></button>
+            <button @click="refreshToken" class="btn btn-primary"><font-awesome-icon icon="sync-alt" /></button>
+            <button @click="editToken" class="btn btn-primary"><font-awesome-icon icon="edit" /></button>
+            <button @click="history" class="btn btn-primary"><font-awesome-icon icon="history" /></button>
         </td>
     </div>
 </template>

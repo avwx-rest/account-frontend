@@ -14,7 +14,7 @@
             <p>{{ errortext }}</p>
         </div>
         <div>
-            <button type="submit" name="action">Reset Password</button>
+            <button type="submit" name="action" class="btn btn-primary">Reset Password</button>
         </div>
     </Form>
 </template>

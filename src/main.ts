@@ -5,6 +5,8 @@ import router from './router'
 import store from './store'
 import setupAuthInterceptors from '@/services/setupInterceptors'
 import { FontAwesomeIcon } from './plugins/font-awesome'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap'
 import 'vue-toastification/dist/index.css'
 
 const toastDefaults: ToastOptions = {

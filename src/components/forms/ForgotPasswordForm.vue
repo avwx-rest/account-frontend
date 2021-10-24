@@ -9,7 +9,7 @@
             <p>{{ errortext }}</p>
         </div>
         <div>
-            <button type="submit" name="action">Send Reset Email</button>
+            <button type="submit" name="action" class="btn btn-primary">Send Reset Email</button>
         </div>
     </Form>
 </template>
