@@ -1,3 +1,5 @@
 <template>
-    <h1>Getting Started</h1>
+    <div>
+        <h1>Getting Started</h1>
+    </div>
 </template>

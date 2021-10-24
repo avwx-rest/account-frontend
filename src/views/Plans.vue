@@ -1,6 +1,8 @@
 <template>
-    <h1>AVWX Plans</h1>
-    <PlanList />
+    <div>
+        <h1>AVWX Plans</h1>
+        <PlanList />
+    </div>
 </template>
 
 <script lang="ts">

@@ -12,10 +12,10 @@
         <li><b>{{ callCount }}</b> calls per day</li>
     </ul>
     <div v-if="loggedIn">
-        <div v-if="userPlan && userPlan.key == plan.key">Current Plan</div>
+        <button v-if="userPlan && userPlan.key == plan.key" class="btn btn-secondary" disabled>Current Plan</button>
         <button v-else-if="plan.key == 'free'" @click="showCancelModal = true" class="btn btn-primary">Switch to Free</button>
         <button v-else @click="switchPlan()" class="btn btn-primary">Start Monthly</button>
-        <div v-if="userPlan && userPlan.key == plan.key+'-year'">Current Plan</div>
+        <button v-if="userPlan && userPlan.key == plan.key+'-year'" class="btn btn-secondary" disbaled>Current Plan</button>
         <button v-else-if="plan.key != 'free'" @click="switchPlan('-year')" class="btn btn-primary">Start Yearly</button>
     </div>
     

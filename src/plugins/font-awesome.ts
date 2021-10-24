@@ -2,6 +2,7 @@ import { library } from "@fortawesome/fontawesome-svg-core"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import {
     faBell,
+    faChartLine,
     faCheckCircle,
     faCreditCard,
     faEdit,
@@ -17,6 +18,7 @@ import {
 
 library.add(
     faBell,
+    faChartLine,
     faCheckCircle,
     faCreditCard,
     faEdit,
