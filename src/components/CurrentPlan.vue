@@ -5,14 +5,13 @@
 </template>
 
 <script lang="ts">
-import { PropType } from 'vue'
 import { Options, Vue } from 'vue-class-component'
 import { Plan } from '@/models/plan'
 
-@Options({
-    props: {
-        plan: { type: Object as PropType<Plan> },
+@Options({})
+export default class CurrentPlan extends Vue {
+    get plan(): Plan {
+        return this.$store.state.user.plan
     }
-})
-export default class CurrentPlan extends Vue {}
+}
 </script>

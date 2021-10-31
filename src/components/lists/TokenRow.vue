@@ -1,26 +1,25 @@
 <template>
-    <div v-if="edit">
-        <TokenEditForm :token="token" @update="updateToken" @cancel="cancelEdit" @delete="deleteToken" />
-    </div>
-    <div v-else>
-        <td>{{ token.name }}</td>
-        <td>
-            <font-awesome-icon v-if="token.active" icon="check-circle" />
-            <font-awesome-icon v-else icon="minus-circle" />
-        </td>
-        <td>{{ token.value }}</td>
-        <td>
+    <TokenEditForm v-if="edit" :token="token" @update="updateToken" @cancel="cancelEdit" @delete="deleteToken" scope="row" />
+    <div v-else  scope="row">
+        <span class="td">{{ token.name }}</span>
+        <span class="td">
+            <font-awesome-icon v-if="token.active" :icon="['far', 'check-circle']" style="color: green;" />
+            <font-awesome-icon v-else :icon="['far', 'times-circle']" style="color: red;" />
+            <font-awesome-icon v-if="token.type == 'dev'" :icon="['fab', 'dev']" style="color: #4f68ae; margin-left: 5px;" />
+        </span>
+        <span class="td">{{ token.value }}</span>
+        <span class="td">
             <button @click="refreshToken" class="btn btn-primary"><font-awesome-icon icon="sync-alt" /></button>
             <button @click="editToken" class="btn btn-primary"><font-awesome-icon icon="edit" /></button>
             <button @click="history" class="btn btn-primary"><font-awesome-icon icon="history" /></button>
-        </td>
+        </span>
     </div>
 </template>
 
 <script lang="ts">
 import { PropType } from 'vue'
 import { Options, Vue } from 'vue-class-component'
-import TokenEditForm from './forms/TokenEditForm.vue'
+import TokenEditForm from '@/components/forms/TokenEditForm.vue'
 import { Token, TokenUpdate } from '@/models/token'
 import TokenApi from '@/services/token.service'
 

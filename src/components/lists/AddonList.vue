@@ -7,7 +7,7 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { Addon } from '@/models/addon'
-import AddonRow from '@/components/AddonRow.vue'
+import AddonRow from '@/components/lists/AddonRow.vue'
 
 @Options({
     components: {

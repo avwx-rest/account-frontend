@@ -4,32 +4,46 @@ import {
     faBell,
     faChartLine,
     faCheckCircle,
+    faConciergeBell,
     faCreditCard,
     faEdit,
     faHistory,
     faKey,
-    faMinusCircle,
+    faPlus,
     faRocket,
     faSyncAlt,
+    faThList,
     faTimesCircle,
     faTrash,
     faUserCircle,
 } from "@fortawesome/free-solid-svg-icons"
+import {
+    faCheckCircle as farCheckCircle,
+    faTimesCircle as farTimesCircle,
+} from "@fortawesome/free-regular-svg-icons"
+import {
+    faDev as fabDev,
+} from "@fortawesome/free-brands-svg-icons"
 
 library.add(
     faBell,
     faChartLine,
     faCheckCircle,
+    faConciergeBell,
     faCreditCard,
     faEdit,
     faHistory,
     faKey,
-    faMinusCircle,
+    faPlus,
     faRocket,
     faSyncAlt,
+    faThList,
     faTimesCircle,
     faTrash,
     faUserCircle,
-)
+    fabDev,
+    farCheckCircle,
+    farTimesCircle,
+    )
 
 export { FontAwesomeIcon }

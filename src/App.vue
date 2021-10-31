@@ -3,9 +3,9 @@
         <div class="container-fluid">
             <div class="row flex-nowrap">
                 <NavBar class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark" />
-                <main class="col py-3 overflow-scroll">
+                <main class="col py-3 overflow-scroll d-flex flex-column min-vh-100">
                     <router-view />
-                    <footer>Copyright © 2021 duPont Technologies LLC</footer>
+                    <footer class="mt-auto">Copyright © 2021 duPont Technologies LLC</footer>
                 </main>
             </div>
         </div>
@@ -45,5 +45,48 @@ footer {
     padding: 0.5rem;
     background-color: #4d5155;
     color: white;
+    margin-bottom: -16px;
+    margin-right: -12px;
+    margin-left: -12px;
+}
+
+.btn-primary {
+    background-color: #4f68ae !important;
+    border-color: #4f68ae !important;
+}
+
+.btn-primary:hover {
+    background-color: #4d5155 !important;
+    border-color: #4d5155 !important;
+}
+
+.btn-outline-primary {
+    border-color: #4f68ae !important;
+    color: #4f68ae !important;
+}
+
+.btn-outline-primary:hover {
+    border-color: #4d5155 !important;
+    color: #4d5155 !important;
+}
+
+.btn-secondary {
+    background-color: #4d5155 !important;
+    border-color: #4d5155 !important;
+}
+
+.btn-secondary:hover {
+    background-color: #4f68ae !important;
+    border-color: #4f68ae !important;
+}
+
+.btn-outline-secondary {
+    border-color: #4d5155 !important;
+    color: #4d5155 !important;
+}
+
+.btn-outline-secondary:hover {
+    border-color: #4f68ae !important;
+    color: #4f68ae !important;
 }
 </style>

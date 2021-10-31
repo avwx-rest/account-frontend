@@ -10,7 +10,7 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import NotificationRow from '@/components/NotificationRow.vue'
+import NotificationRow from '@/components/lists/NotificationRow.vue'
 import { UserNotification } from '@/models/user'
 
 @Options({

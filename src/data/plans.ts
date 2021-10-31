@@ -6,7 +6,7 @@ export const PLANS: { [key: string]: PlanDisplayData} = {
             {text: "Station Info", link: "https://avwx.docs.apiary.io/#reference/0/station"},
             {text: "Station Search", link: "https://avwx.docs.apiary.io/#reference/0/station-search"},
             {text: "Nearest Stations", link: "https://avwx.docs.apiary.io/#reference/0/nearest-stations"},
-            {text: "Metar", link: "https://avwx.docs.apiary.io/#reference/0/metar"},
+            {text: "METAR", link: "https://avwx.docs.apiary.io/#reference/0/metar"},
             {text: "TAF", link: "https://avwx.docs.apiary.io/#reference/0/taf"},
         ],
     },

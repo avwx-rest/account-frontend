@@ -1,19 +1,19 @@
 <template>
     <Form @submit="handleLogin" :validation-schema="schema">
-        <div>
-            <Field name="email" type="email" id="email" />
+        <div class="form-group">
             <label for="email">Email</label>
-            <ErrorMessage name="email" />
+            <Field name="email" type="email" id="email" class="form-control"  aria-describedby="emailHelp" placeholder="Enter email" />
+            <ErrorMessage name="email" id="emailHelp" class="form-text text-muted" />
         </div>
-        <div>
-            <Field name="password" type="password" id="password" />
+        <div class="form-group">
             <label for="password">Password</label>
-            <ErrorMessage name="password" />
+            <Field name="password" type="password" id="password" class="form-control"  aria-describedby="passwordHelp" placeholder="Password" />
+            <ErrorMessage name="password" id="passwordHelp" class="form-text text-muted" />
         </div>
-        <div v-if="errortext.length > 0">
-            <p>{{ errortext }}</p>
+        <div v-if="errorText.length > 0" class="form-group">
+            <p>{{ errorText }}</p>
         </div>
-        <div>
+        <div class="form-group">
             <button type="submit" name="action" class="btn btn-primary">Login</button>
         </div>
     </Form>
@@ -34,7 +34,7 @@ import { Login as LoginData } from '@/models/auth'
     }
 })
 export default class LoginForm extends Vue {
-    errortext = ''
+    errorText = ''
     schema = yup.object().shape({
         email: yup.string().email('Not a valid email').required('Email is required'),
         password: yup.string().required('Password is required'),
@@ -51,13 +51,19 @@ export default class LoginForm extends Vue {
                 if (axios.isAxiosError(error)) {
                     console.log("handle known error code")
                     console.log(error.response?.data)
-                    this.errortext = "error"
+                    this.errorText = "error"
                 } else {
                     console.log("unknown error occured")
-                    this.errortext = "An unknown error occurred"
+                    this.errorText = "An unknown error occurred"
                 }
             }
         )
     }
 }
 </script>
+
+<style lang="scss">
+.form-group {
+    margin-bottom: 16px;
+}
+</style>

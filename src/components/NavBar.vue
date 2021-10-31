@@ -19,10 +19,20 @@
                     <font-awesome-icon icon="chart-line" class="fs-4" /> <span class="ms-1 d-none d-sm-inline">API Usage</span>
                 </router-link>
             </li>
-            <li v-if="loggedIn" class="nav-item">
+            <li class="nav-item">
                 <router-link to="/plans" class="nav-link align-middle px-0">
-                    <font-awesome-icon icon="credit-card" class="fs-4" /> <span class="ms-1 d-none d-sm-inline">Billing</span>
+                    <font-awesome-icon icon="th-list" class="fs-4" /> <span class="ms-1 d-none d-sm-inline">Plans</span>
                 </router-link>
+            </li>
+            <li v-if="showBilling" class="nav-item">
+                <a @click="getBilling()" class="nav-link align-middle px-0">
+                    <font-awesome-icon icon="credit-card" class="fs-4" /> <span class="ms-1 d-none d-sm-inline">Billing</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="https://support.avwx.rest" class="nav-link align-middle px-0">
+                    <font-awesome-icon icon="concierge-bell" class="fs-4" /> <span class="ms-1 d-none d-sm-inline">Support</span>
+                </a>
             </li>
             <!-- <li>
                 <a href="#submenu2" data-bs-toggle="collapse" class="nav-link px-0 align-middle dropdown-toggle">
@@ -54,6 +64,7 @@
         </div>
         <div v-else class="pb-4">
             <router-link to="/login" class="d-flex align-items-center text-white text-decoration-none">Sign in</router-link>
+            <router-link to="/register" class="d-flex align-items-center text-white text-decoration-none">Create Account</router-link>
         </div>
     </nav>
 </template>
@@ -61,6 +72,7 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 // import NotificationList from '@/components/NotificationList.vue'
+import UserApi from '@/services/user.service'
 
 @Options({
     components: {
@@ -72,8 +84,26 @@ export default class NavBar extends Vue {
         return this.$store.state.auth.loggedIn
     }
 
+    get showBilling(): boolean {
+        return Boolean(this.$store.state.user.user?.stripe?.customer_id)
+    }
+
     get name(): string {
         return this.$store.state.user.user?.first_name || this.$store.state.user.user?.email || "User"
+    }
+
+    public getBilling(): void {
+        let newWindow: Window | null
+        if (this.$store.state.user.user?.stripe?.customer_id) newWindow = window.open()
+        UserApi.stripePortal().then(
+            (url) => {
+                console.log(url)
+                if (url && newWindow) {
+                    newWindow.location.href = url
+                }
+            },
+            (error) => console.log(error),
+        )
     }
 }
 </script>
@@ -82,10 +112,22 @@ export default class NavBar extends Vue {
 nav {
     height: 100%;
     padding: 30px;
+    max-width: 300px;
+    background-color: black !important;
 
     a {
+        color: white !important;
+
         &.router-link-exact-active {
-            background-color: #42b983;
+            background-color: #4f68ae;
+        }
+
+        // &:hover {
+        //     background-color: #4f68ae !important;
+        // }
+
+        svg {
+            color: #4f68ae !important;
         }
     }
 }

@@ -5,7 +5,7 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import AddonList from '@/components/AddonList.vue'
+import AddonList from '@/components/lists/AddonList.vue'
 
 @Options({
     components: {

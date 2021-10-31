@@ -1,6 +1,10 @@
 import axios from './api'
 import { UserNotification, User } from '@/models/user'
 
+interface StripePortal {
+    url: string
+}
+
 class UserApi {
     public async getUser(): Promise<User> {
         const data = await axios.get<User>('user')
@@ -19,6 +23,11 @@ class UserApi {
     public async stripeSuccess(success: boolean): Promise<void> {
         const route = success ? 'success' : 'cancel'
         await axios.get<void>('stripe/' + route)
+    }
+
+    public async stripePortal(): Promise<string | null> {
+        const data = await axios.get<StripePortal>('stripe/portal')
+        return data.data?.url
     }
 }
 

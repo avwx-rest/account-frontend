@@ -1,19 +1,19 @@
 <template>
-    <Form @submit="updateToken" :validation-schema="schema">
-        <td>
-            <Field name="name" type="text" v-model="form.name"/>
+    <Form @submit="updateToken" :validation-schema="schema" scope="row">
+        <span class="td form-group">
+            <Field name="name" type="text" v-model="form.name" class="form-control" />
             <ErrorMessage name="name" />
-        </td>
-        <td>
-            <Field name="active" type="checkbox" v-model="form.active" :value="true" />
+        </span>
+        <span class="td form-group">
+            <Field name="active" type="checkbox" v-model="form.active" :value="true" class="form-check-input" />
             <ErrorMessage name="active" />
-        </td>
-        <td>{{ token.value }}</td>
-        <td>
+        </span>
+        <span class="td form-group">{{ token.value }}</span>
+        <span class="td form-group">
             <button type="submit" name="action" :disabled="isSubmitting" class="btn btn-primary"><font-awesome-icon icon="check-circle" /></button>
             <button @click="cancel" class="btn btn-primary"><font-awesome-icon icon="times-circle" /></button>
             <button @click="deleteToken" :disabled="isSubmitting" class="btn btn-primary"><font-awesome-icon icon="trash" /></button>
-        </td>
+        </span>
     </Form>
 </template>
 

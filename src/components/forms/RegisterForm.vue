@@ -1,22 +1,25 @@
 <template>
     <Form @submit="register" :validation-schema="schema">
-        <div>
-            <Field name="email" type="email" id="email" />
+        <div class="form-group">
             <label for="email">Email</label>
-            <ErrorMessage name="email" />
+            <Field name="email" type="email" id="email" class="form-control"  aria-describedby="emailHelp" placeholder="Enter email" />
+            <ErrorMessage name="email" id="emailHelp" class="form-text text-muted" />
         </div>
-        <div>
-            <Field name="password" type="password" id="password" />
+        <div class="form-group">
             <label for="password">Password</label>
-            <ErrorMessage name="password" />
+            <Field name="password" type="password" id="password" class="form-control"  aria-describedby="passwordHelp" placeholder="Password" />
+            <ErrorMessage name="password" id="passwordHelp" class="form-text text-muted" />
         </div>
-        <div>
-            <Field name="confirm" type="password" id="confirm" />
+        <div class="form-group">
             <label for="confirm">Confirm Password</label>
-            <ErrorMessage name="confirm" />
+            <Field name="confirm" type="password" id="confirm" class="form-control"  aria-describedby="confirmHelp" placeholder="Confirm password" />
+            <ErrorMessage name="confirm" id="confirmHelp" class="form-text text-muted" />
         </div>
-        <div>
-            <button type="submit" name="action" :disabled="isSubmitting" class="btn btn-primary">Sign Up</button>
+        <div v-if="errorText.length > 0" class="form-group">
+            <p>{{ errorText }}</p>
+        </div>
+        <div class="form-group">
+            <button type="submit" name="action" :disabled="isSubmitting" class="btn btn-primary">Register</button>
         </div>
     </Form>
 </template>
@@ -45,7 +48,7 @@ interface RegisterData extends Login {
 })
 export default class RegisterForm extends Vue {
     isSubmitting = false
-    errorText = ""
+    errorText = ''
 
     schema = yup.object().shape({
         email: yup.string().email('Not a valid email').required("Email is required"),
@@ -76,3 +79,9 @@ export default class RegisterForm extends Vue {
     }
 }
 </script>
+
+<style lang="scss">
+.form-group {
+    margin-bottom: 16px;
+}
+</style>

@@ -7,7 +7,7 @@
                 <p>You still have addons. Would you like to keep them and just downgrade your plan?</p>
                 <button @click="$emit('change')" class="btn btn-primary">Yes, Keep Addons</button>
             </div>
-            <button @click="$emit('cancel')" class="btn btn-primary">{{ userHasAddons ? 'Cancel Everything' : 'Continue' }}</button>
+            <button @click="$emit('cancel')" class="btn btn-danger">{{ userHasAddons ? 'Cancel Everything' : 'Continue' }}</button>
             <button @click="$emit('close')" class="btn btn-primary">Go Back</button>
         </div>
     </transition>
