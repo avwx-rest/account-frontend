@@ -1,13 +1,15 @@
 <template>
-    <div v-for="addon in addons" :key="addon.key">
-        <AddonRow v-bind:addon="addon" @reloadUser="reloadUser" />
+    <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+        <div v-for="addon in addons" :key="addon.key">
+            <AddonRow v-bind:addon="addon" @reloadUser="reloadUser" />
+        </div>
     </div>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import { Addon } from '@/models/addon'
-import AddonRow from '@/components/lists/AddonRow.vue'
+import AddonRow from '@/components/lists/AddonDetail.vue'
 
 @Options({
     components: {

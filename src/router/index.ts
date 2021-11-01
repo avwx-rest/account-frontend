@@ -54,11 +54,6 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Plans',
     component: () => import(/* webpackChunkName: "plans" */ '../views/Plans.vue')
   },
-  {
-    path: '/addons',
-    name: 'Addons',
-    component: () => import(/* webpackChunkName: "addons" */ '../views/Addons.vue')
-  },
 
   // Checkout
   {

@@ -1,9 +1,17 @@
 <template>
-    <h3>{{ addon.name }}</h3>
-    <p>{{ addon.description }}</p>
-    <div v-if="loggedIn">
-        <button v-if="userHasAddon" @click="removeAddon" class="btn btn-primary">Remove</button>
-        <button v-else @click="addAddon" class="btn btn-primary">Add to plan</button>
+    <div class="col">
+        <div class="card mb-4 rounded-3 shadow-sm" v-bind:class="{ 'card-added': userHasAddon }">
+            <div class="card-header py-3">
+                <h4 class="my-0 fw-normal">{{ addon.name }}</h4>
+            </div>
+            <div class="card-body">
+                <p>{{ addon.description }}</p>
+                <div v-if="loggedIn">
+                    <button v-if="userHasAddon" @click="removeAddon" class="btn btn-secondary">Remove</button>
+                    <button v-else @click="addAddon" class="btn btn-primary">Add to plan</button>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -61,3 +69,14 @@ export default class AddonDetail extends Vue {
     }
 }
 </script>
+
+<style lang="scss">
+.card-added {
+    border-color: rgba(#4f68ae, 0.35);
+
+    .card-header {
+        background-color: #4f68ae;
+        color: white;
+    }
+}
+</style>
