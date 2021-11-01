@@ -26,7 +26,7 @@
                 </ul>
                 <div v-if="loggedIn">
                     <button v-if="userPlan && userPlan.key == plan.key" class="w-100 btn btn-lg btn-outline-secondary" disabled>Current Plan</button>
-                    <button v-else-if="plan.key == 'free'" @click="$emit('showModal')" class="w-100 btn btn-lg btn-secondary">Switch to Free</button>
+                    <button v-else-if="plan.key == 'free'" class="w-100 btn btn-lg btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#cancelPlanModal">Switch to Free</button>
                     <button v-else @click="switchPlan()" class="w-100 btn btn-lg btn-primary">Start Monthly</button>
                     <button v-if="userPlan && userPlan.key == plan.key+'-year'" class="w-100 btn btn-lg btn-outline-secondary" disbaled>Current Plan</button>
                     <button v-else-if="plan.key != 'free'" @click="switchPlan('-year')" class="w-100 btn btn-lg btn-primary">Start Yearly</button>
@@ -45,7 +45,7 @@ import { Plan, PlanData } from '@/models/plan'
     props: {
         plan: { type: Object as PropType<PlanData> }
     },
-    emits: ['switchPlan', 'showModal'],
+    emits: ['switchPlan'],
 })
 export default class PlanDetail extends Vue {
     plan!: PlanData
