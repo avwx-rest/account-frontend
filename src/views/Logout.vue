@@ -9,8 +9,11 @@ import { Options, Vue } from "vue-class-component"
 export default class Home extends Vue {
     public created(): void {
         if (this.loggedIn) {
-            this.$store.dispatch('auth/logout').then(
-                this.$router.push('/')
+            Promise.all([
+                this.$store.dispatch('auth/logout'),
+                this.$store.dispatch('user/clear'),
+            ]).then(
+                () => this.$router.push('/')
             )
         } else {
             this.$router.push('/')

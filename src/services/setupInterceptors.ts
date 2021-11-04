@@ -19,7 +19,7 @@ export default function setup(): void {
         async (err) => {
             const originalConfig = err.config
 
-            if ((originalConfig.url !== 'auth/login' || originalConfig.url !== 'auth/refresh') && err.response) {
+            if ((originalConfig.url !== 'auth/login' && originalConfig.url !== 'auth/refresh') && err.response) {
                 // Access Token was expired
                 if ((err.response.status === 401 || err.response.status === 422) && !originalConfig._retry) {
                     originalConfig._retry = true
