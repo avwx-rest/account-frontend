@@ -43,31 +43,21 @@ export const publicdata: Module<PublicState, any> = {
     state: makeInitialState(),
     actions: {
         async getPlans({ commit }: { commit: Commit }): Promise<void> {
-            console.log('Calling get plans')
             const plans = await PlanApi.getPlans()
-            console.log('Got plans')
-            console.log(plans)
             commit('getPlansSuccess', expandPlans(plans))
         },
 
         async getAddons({ commit }: { commit: Commit }): Promise<void> {
-            console.log('Calling get addons')
             const addons = await PlanApi.getAddons()
-            console.log('Got addons')
-            console.log(addons)
             commit('getAddonsSuccess', addons)
         },
     },
     mutations: {
         getPlansSuccess(state: PublicState, plans: PlanMap): void {
-            console.log('In success')
-            console.log(plans)
             state.plans = plans
         },
 
         getAddonsSuccess(state: PublicState, addons: Addon[]): void {
-            console.log('In success')
-            console.log(addons)
             state.addons = addons
         }
     }

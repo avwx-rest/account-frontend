@@ -59,7 +59,6 @@ export default class PlanDetail extends Vue {
     }
 
     get styleName(): string {
-        console.log("plan-" + this.plan.key)
         return "plan-" + this.plan.key
     }
 

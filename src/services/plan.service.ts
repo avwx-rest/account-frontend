@@ -21,7 +21,7 @@ class PlanApi {
     }
 
     public async cancelPlan(): Promise<void> {
-        const data = await axios.post<void>('plan', {
+        await axios.post<void>('plan', {
             key: 'free',
             remove_addons: true,
         })

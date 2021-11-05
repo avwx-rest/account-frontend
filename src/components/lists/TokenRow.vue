@@ -11,7 +11,7 @@
         <span class="td">
             <button @click="refreshToken" class="btn btn-primary"><font-awesome-icon icon="sync-alt" /></button>
             <button @click="editToken" class="btn btn-primary"><font-awesome-icon icon="edit" /></button>
-            <button @click="history" class="btn btn-primary"><font-awesome-icon icon="history" /></button>
+            <!-- <button @click="history" class="btn btn-primary"><font-awesome-icon icon="history" /></button> -->
         </span>
     </div>
 </template>

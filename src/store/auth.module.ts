@@ -1,4 +1,4 @@
-import { Commit, Module } from "vuex"
+import { Commit, Dispatch, Module } from "vuex"
 import { Login, RefreshToken } from "@/models/auth"
 import AuthApi from "@/services/auth.service"
 import RegisterApi from "@/services/register.service"
@@ -14,22 +14,17 @@ export const auth: Module<AuthState, any> = {
     },
     actions: {
         async register({ commit }: { commit: Commit }, form: Login): Promise<void> {
-            console.log("Calling register")
-            console.log(form)
             RegisterApi.register(form).then(
                 () => commit('registerSuccess'),
                 (error) => console.log(error),
             )
         },
-        async login({ commit }: { commit: Commit }, form: Login): Promise<void> {
-            console.log("Calling login")
-            console.log(form)
+        async login({ commit, dispatch }: { commit: Commit, dispatch: Dispatch }, form: Login): Promise<void> {
             AuthApi.login(form).then(
-                (auth) => commit('loginSuccess', auth),
-                (error) => {
-                    console.log(error)
-                    // notification?
-                }
+                (auth) => {
+                    commit('loginSuccess', auth)
+                    dispatch('user/getUser', null, {root: true})
+                },
             )
         },
         logout({ commit }: { commit: Commit }): void {

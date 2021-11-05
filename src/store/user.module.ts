@@ -16,7 +16,6 @@ interface UserState {
 
 function makeInitialState(): UserState {
     const userString = localStorage.getItem("user")
-    console.log(userString)
     if (!userString) {
         return {
             tokens: [],
@@ -42,31 +41,19 @@ export const user: Module<UserState, any> = {
             commit('clearAll')
         },
         async getUser({ commit }: { commit: Commit }): Promise<void> {
-            console.log('Calling get user')
             const user = await UserApi.getUser()
-            console.log('Got user')
-            console.log(user)
             commit('getUserSuccess', user)
         },
         async getTokens({ commit }: { commit: Commit }): Promise<void> {
-            console.log('Calling get tokens')
             const tokens = await TokenApi.getTokens()
-            console.log('Got tokens')
-            console.log(tokens)
             commit('getTokensSuccess', tokens)
         },
         async newToken({ commit }: { commit: Commit }): Promise<void> {
-            console.log('Calling new token')
             const token = await TokenApi.newToken()
-            console.log('Got token')
-            console.log(token)
             commit('newTokenSuccess', token)
         },
         async getNotifications({ commit }: { commit: Commit }): Promise<void> {
-            console.log('Calling get notifications')
             const notifications = await UserApi.getNotifications()
-            console.log('Got notifications')
-            console.log(notifications)
             commit('getNotificationsSuccess', notifications)
         },
     },
@@ -80,8 +67,6 @@ export const user: Module<UserState, any> = {
             state.notifications = []
         },
         getUserSuccess(state: UserState, user: User): void {
-            console.log('In success')
-            console.log(user)
             localStorage.setItem('user', JSON.stringify(user))
             state.user = user
             state.plan = user.plan
@@ -90,18 +75,12 @@ export const user: Module<UserState, any> = {
             state.notifications = user.notifications
         },
         getTokensSuccess(state: UserState, tokens: Token[]): void {
-            console.log('In success')
-            console.log(tokens)
             state.tokens = tokens
         },
         newTokenSuccess(state: UserState, token: Token): void {
-            console.log('In success')
-            console.log(token)
             state.tokens.push(token)
         },
         getNotificationsSuccess(state: UserState, notifications: UserNotification[]): void {
-            console.log('In success')
-            console.log(notifications)
             state.notifications = notifications
         },
     }

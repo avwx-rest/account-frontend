@@ -1,14 +1,22 @@
 <template>
     <div class="container py-3">
-        <header>
-            <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
-                <h1 class="display-4 fw-normal">API Usage</h1>
-                <p class="fs-5 text-muted">Tokens</p>
-            </div>
-        </header>
-    
+        <Header title="API Usage" subtitle="Your daily API usage per token. All records are reported in UTC." />
         <main>
-            <p>Graph Here</p>
+            <UsageChart />
         </main>
     </div>
 </template>
+
+<script lang="ts">
+import { Options, Vue } from 'vue-class-component'
+import Header from '@/components/Header.vue'
+import UsageChart from '@/components/UsageChart.vue'
+
+@Options({
+    components: {
+        Header,
+        UsageChart,
+    }
+})
+export default class ApiUsage extends Vue {}
+</script>
