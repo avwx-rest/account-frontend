@@ -11,6 +11,7 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
+import { useToast } from 'vue-toastification'
 import PlanDetail from '@/components/lists/PlanDetail.vue'
 import CancelPlanModal from '@/components/CancelPlanModal.vue'
 import { PlanMap } from '@/models/plan'
@@ -24,6 +25,8 @@ import PlanApi from '@/services/plan.service'
 })
 export default class PlanList extends Vue {
     keys = ['free', 'pro', 'enterprise']
+
+    toast = useToast()
 
     get plans(): PlanMap {
         return this.$store.state.publicdata.plans
@@ -46,17 +49,27 @@ export default class PlanList extends Vue {
                 if (url && newWindow) {
                     newWindow.location.href = url
                 } else {
+                    this.toast.success('Successfully updated your plan')
                     this.reloadUser()
                 }
             },
-            (error) => console.log(error),
+            (error) => {
+                console.log(error)
+                this.toast.error('There was an error updating your plan')
+            },
         )
     }
 
     public cancelPlan(): void {
         PlanApi.cancelPlan().then(
-            () => this.reloadUser(),
-            (error) => console.log(error),
+            () => {
+                this.toast.success('Your plan has been cancelled')
+                this.reloadUser()
+            },
+            (error) => {
+                console.log(error)
+                this.toast.error('There was an error cancelling your plan')
+            },
         )
     }
 }

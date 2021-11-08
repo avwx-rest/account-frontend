@@ -31,7 +31,8 @@ import { Login as LoginData } from '@/models/auth'
         Form,
         Field,
         ErrorMessage,
-    }
+    },
+    emits: ['forward'],
 })
 export default class LoginForm extends Vue {
     errorText = ''
@@ -41,11 +42,8 @@ export default class LoginForm extends Vue {
     })
 
     public handleLogin(creds: LoginData): void {
-        console.log(creds)
         this.$store.dispatch('auth/login', creds).then(
-            () => {
-                this.$router.push("/")
-            },
+            () => this.$emit('forward'),
             (error: Error | AxiosError) => {
                 console.log(error)
                 if (axios.isAxiosError(error)) {

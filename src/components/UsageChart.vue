@@ -6,6 +6,7 @@
 import { Options, Vue } from 'vue-class-component'
 import { ChartItem } from 'chart.js'
 import { DateTime } from 'luxon'
+import { useToast } from 'vue-toastification'
 import { TokenUsage } from '@/models/token'
 import TokenApi from '@/services/token.service'
 import Chart from 'chart.js/auto'
@@ -31,10 +32,15 @@ const COLORS = [
 
 @Options({})
 export default class UsageChart extends Vue {
+    toast = useToast()
+
     public mounted(): void {
         TokenApi.allHistory().then(
             data => this.drawChart(data),
-            error => console.log(error),
+            error => {
+                console.log(error)
+                this.toast.error('There was an error loading the usage data')
+            },
         )
     }
 

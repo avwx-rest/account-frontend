@@ -18,6 +18,7 @@
 <script lang="ts">
 import { PropType } from 'vue'
 import { Options, Vue } from 'vue-class-component'
+import { useToast } from 'vue-toastification'
 import { Addon } from '@/models/addon'
 import PlanApi from '@/services/plan.service'
 
@@ -29,6 +30,8 @@ import PlanApi from '@/services/plan.service'
 })
 export default class AddonDetail extends Vue {
     addon!: Addon
+
+    toast = useToast()
 
     get loggedIn(): boolean {
         return this.$store.state.auth.loggedIn
@@ -54,17 +57,27 @@ export default class AddonDetail extends Vue {
                 if (url && newWindow) {
                     newWindow.location.href = url
                 } else {
+                    this.toast.success(`${this.addon.name} addon added`)
                     this.$emit('reloadUser')
                 }
             },
-            (error) => console.log(error),
+            (error) => {
+                console.log(error)
+                this.toast.error('There was an error adding the addon')
+            },
         )
     }
 
     public removeAddon(): void {
         PlanApi.removeAddon(this.addon.key).then(
-            () => this.$emit('reloadUser'),
-            (error) => console.log(error),
+            () => {
+                this.toast.success(`${this.addon.name} addon removed`)
+                this.$emit('reloadUser')
+            },
+            (error) => {
+                console.log(error)
+                this.toast.error('There was an error removing the addon')
+            },
         )
     }
 }
