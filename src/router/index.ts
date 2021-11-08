@@ -1,78 +1,109 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import AuthApi from '@/services/auth.service'
 import Home from '../views/Home.vue'
 import GettingStarted from '@/views/GettingStarted.vue'
 
-const routes: Array<RouteRecordRaw> = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Home,
-  },
-  {
-    path: '/getting-started',
-    name: 'GettingStarted',
-    component: GettingStarted,
-  },
+const routes: RouteRecordRaw[] = [
+    {
+        path: '/',
+        name: 'Home',
+        component: Home,
+    },
+    {
+        path: '/getting-started',
+        name: 'GettingStarted',
+        component: GettingStarted,
+    },
 
-  // Account Actions
-  {
-    path: '/login',
-    name: 'Login',
-    component: () => import(/* webpackChunkName: "login" */ '../views/Login.vue'),
-  },
-  {
-    path: '/logout',
-    name: 'Logout',
-    component: () => import(/* webpackChunkName: "logout" */ '../views/Logout.vue')
-  },
-  {
-    path: '/register',
-    name: 'Register',
-    component: () => import(/* webpackChunkName: "register" */ '../views/Register.vue')
-  },
-  {
-    path: '/forgot-password',
-    name: 'Forgot Password',
-    component: () => import(/* webpackChunkName: "forgot-password" */ '../views/ForgotPassword.vue')
-  },
+    // Account Actions
+    {
+        path: '/login',
+        name: 'Login',
+        component: () => import(/* webpackChunkName: "login" */ '../views/Login.vue'),
+        meta: { guest: true },
+    },
+    {
+        path: '/logout',
+        name: 'Logout',
+        component: () => import(/* webpackChunkName: "logout" */ '../views/Logout.vue'),
+        meta: { requiresAuth: true },
+    },
+    {
+        path: '/register',
+        name: 'Register',
+        component: () => import(/* webpackChunkName: "register" */ '../views/Register.vue'),
+        meta: { guest: true },
+    },
+    {
+        path: '/forgot-password',
+        name: 'Forgot Password',
+        component: () => import(/* webpackChunkName: "forgot-password" */ '../views/ForgotPassword.vue'),
+        meta: { guest: true },
+    },
+    // API Tokens
+    {
+        path: '/tokens',
+        name: 'Tokens',
+        component: () => import(/* webpackChunkName: "tokens" */ '../views/Tokens.vue'),
+        meta: { requiresAuth: true },
+    },
+    {
+        path: '/api-usage',
+        name: 'API Usage',
+        component: () => import(/* webpackChunkName: "api-usage" */ '../views/ApiUsage.vue'),
+        meta: { requiresAuth: true },
+    },
 
-  // API Tokens
-  {
-    path: '/tokens',
-    name: 'Tokens',
-    component: () => import(/* webpackChunkName: "tokens" */ '../views/Tokens.vue')
-  },
-  {
-    path: '/api-usage',
-    name: 'API Usage',
-    component: () => import(/* webpackChunkName: "api-usage" */ '../views/ApiUsage.vue')
-  },
+    // Products
+    {
+        path: '/plans',
+        name: 'Plans',
+        component: () => import(/* webpackChunkName: "plans" */ '../views/Plans.vue'),
+    },
 
-  // Products
-  {
-    path: '/plans',
-    name: 'Plans',
-    component: () => import(/* webpackChunkName: "plans" */ '../views/Plans.vue')
-  },
-
-  // Checkout
-  {
-    path: '/stripe/success',
-    name: 'StripeSuccess',
-    component: () => import(/* webpackChunkName: "stripe-t" */ '../views/Stripe.vue'),
-    props: { success: true }
-  },
-  {
-    path: '/stripe/cancel',
-    name: 'StripeCancel',
-    component: () => import(/* webpackChunkName: "stripe-f" */ '../views/Stripe.vue'),
-    props: { success: false }
-  },
+    // Checkout
+    {
+        path: '/stripe/success',
+        name: 'StripeSuccess',
+        component: () => import(/* webpackChunkName: "stripe-t" */ '../views/Stripe.vue'),
+        props: { success: true },
+        meta: { requiresAuth: true },
+    },
+    {
+        path: '/stripe/cancel',
+        name: 'StripeCancel',
+        component: () => import(/* webpackChunkName: "stripe-f" */ '../views/Stripe.vue'),
+        props: { success: false },
+        meta: { requiresAuth: true },
+    },
 ]
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
-  routes,
+    history: createWebHistory(process.env.BASE_URL),
+    routes,
+})
+
+router.beforeEach((to, from, next) => {
+    // Requires login
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+        if (!AuthApi.accessToken) {
+            next({
+                name: 'Login',
+                params: { nextUrl: to.fullPath }
+            })
+        } else {
+            next()
+        }
+    // Requires not login
+    } else if (to.matched.some(record => record.meta.guest)) {
+        if (AuthApi.accessToken) {
+          next({ path: '/' })
+        } else {
+            next()
+        }
+    } else {
+        next()
+    }
 })
 
 export default router

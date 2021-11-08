@@ -17,7 +17,6 @@
 </template>
 
 <script lang="ts">
-import { User, emptyUser } from '@/models/user'
 import { Options, Vue } from 'vue-class-component'
 import CurrentPlan from '@/components/CurrentPlan.vue'
 import TokenList from '@/components/lists/TokenList.vue'
@@ -29,23 +28,8 @@ import TokenList from '@/components/lists/TokenList.vue'
     }
 })
 export default class Manage extends Vue {
-    user: User = emptyUser
-
-    get userLoaded(): boolean {
-        return this.user.email.length > 0
-    }
-
-    get storedUser(): User {
-        return this.$store.state.user.user
-    }
-
     public newToken(): void {
         this.$store.dispatch('user/newToken')
-    }
-
-    public created(): void {
-        if (this.storedUser) this.user = this.storedUser
-        this.$store.dispatch('user/getUser')
     }
 }
 </script>
