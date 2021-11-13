@@ -94,7 +94,6 @@ export default class NavBar extends Vue {
         if (this.$store.state.user.user?.stripe?.customer_id) newWindow = window.open()
         UserApi.stripePortal().then(
             (url) => {
-                console.log(url)
                 if (url && newWindow) {
                     newWindow.location.href = url
                 }

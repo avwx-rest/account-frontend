@@ -14,7 +14,7 @@
             <p>{{ errorText }}</p>
         </div>
         <div class="form-group">
-            <button type="submit" name="action" class="btn btn-primary">Login</button>
+            <button type="submit" name="action" :disabled="isSubmitting" class="btn btn-primary">Login</button>
         </div>
     </Form>
 </template>
@@ -36,12 +36,14 @@ import { Login as LoginData } from '@/models/auth'
 })
 export default class LoginForm extends Vue {
     errorText = ''
+    isSubmitting = false
     schema = yup.object().shape({
         email: yup.string().email('Not a valid email').required('Email is required'),
         password: yup.string().required('Password is required'),
     })
 
     public handleLogin(creds: LoginData): void {
+        this.isSubmitting = true
         this.$store.dispatch('auth/login', creds).then(
             () => this.$emit('forward'),
             (error: Error | AxiosError) => {

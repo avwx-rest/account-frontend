@@ -45,18 +45,14 @@ export default class TokenRow extends Vue {
     }
 
     public editToken(): void {
-        console.log("Edit token")
         this.edit = true
     }
 
     public cancelEdit(): void {
-        console.log("Cancel Edit")
         this.edit = false
     }
 
     public updateToken(form: TokenUpdate): void {
-        console.log("Update token")
-        console.log(form)
         TokenApi.updateToken(this.token, form).then(
             () => this.$emit('reload'),
             (error) => console.log(error),
@@ -64,7 +60,6 @@ export default class TokenRow extends Vue {
     }
 
     public deleteToken(): void {
-        console.log("Delete token")
         TokenApi.deleteToken(this.token).then(
             () => this.$emit('reload'),
             (error) => console.log(error),

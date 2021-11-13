@@ -14,7 +14,7 @@
             <p>{{ errorText }}</p>
         </div>
         <div class="form-group">
-            <button type="submit" name="action" class="btn btn-primary">Reset Password</button>
+            <button type="submit" name="action" :disabled="isSubmitting" class="btn btn-primary">Reset Password</button>
         </div>
     </Form>
 </template>
@@ -48,6 +48,7 @@ interface ResetData {
 export default class ResetPasswordForm extends Vue {
     token!: string
     errorText = ''
+    isSubmitting = false
 
     schema = yup.object().shape({
         password: yup.string().required('Password is required'),
@@ -56,7 +57,7 @@ export default class ResetPasswordForm extends Vue {
     toast = useToast()
 
     public handleForm(form: ResetData): void {
-        console.log(form)
+        this.isSubmitting = true
         RegisterApi.resetPassword(this.token, form.password).then(
             () => {
                 this.toast.success('Password has been reset. Log in to continue')

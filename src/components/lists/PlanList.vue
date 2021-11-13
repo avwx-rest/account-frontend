@@ -45,7 +45,6 @@ export default class PlanList extends Vue {
         if (!this.$store.state.user.user?.stripe?.subscription_id) newWindow = window.open()
         PlanApi.changePlan(key).then(
             (url) => {
-                console.log(url)
                 if (url && newWindow) {
                     newWindow.location.href = url
                 } else {

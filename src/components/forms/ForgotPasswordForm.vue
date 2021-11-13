@@ -9,7 +9,7 @@
             <p>{{ errorText }}</p>
         </div>
         <div class="form-group">
-            <button type="submit" name="action" class="btn btn-primary">Send Reset Email</button>
+            <button type="submit" name="action" :disabled="isSubmitting" class="btn btn-primary">Send Reset Email</button>
         </div>
     </Form>
 </template>
@@ -35,13 +35,14 @@ interface ForgotData {
 })
 export default class ForgotPasswordForm extends Vue {
     errorText = ''
+    isSubmitting = false
     schema = yup.object().shape({
         email: yup.string().email('Not a valid email').required('Email is required'),
     })
     toast = useToast()
 
     public handleForm(form: ForgotData): void {
-        console.log(form)
+        this.isSubmitting = true
         RegisterApi.forgotPassword(form.email).then(
             () => {
                 this.toast.success('Password reset email is on the way')

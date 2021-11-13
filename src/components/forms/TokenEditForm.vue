@@ -11,7 +11,7 @@
         <span class="td form-group">{{ token.value }}</span>
         <span class="td form-group">
             <button type="submit" name="action" :disabled="isSubmitting" class="btn btn-primary"><font-awesome-icon icon="check-circle" /></button>
-            <button @click="cancel" class="btn btn-primary"><font-awesome-icon icon="times-circle" /></button>
+            <button @click="cancel" :disabled="isSubmitting" class="btn btn-primary"><font-awesome-icon icon="times-circle" /></button>
             <button @click="deleteToken" :disabled="isSubmitting" class="btn btn-primary"><font-awesome-icon icon="trash" /></button>
         </span>
     </Form>
@@ -68,7 +68,6 @@ export default class Plan extends Vue {
     }
 
     public deleteToken(): void {
-        console.log("Delete token")
         this.isSubmitting = true
         this.$emit("delete")
     }

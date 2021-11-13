@@ -47,8 +47,8 @@ interface RegisterData extends Login {
     }
 })
 export default class RegisterForm extends Vue {
-    isSubmitting = false
     errorText = ''
+    isSubmitting = false
 
     schema = yup.object().shape({
         email: yup.string().email('Not a valid email').required("Email is required"),
@@ -58,7 +58,7 @@ export default class RegisterForm extends Vue {
     toast = useToast()
 
     public register(form: RegisterData): void {
-        console.log(form)
+        this.isSubmitting = true
         this.$store.dispatch('auth/register', form).then(
             () => {
                 this.toast.success('Registered. Check your email to continue')
