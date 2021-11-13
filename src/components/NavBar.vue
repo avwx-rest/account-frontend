@@ -54,17 +54,14 @@
                 <span class="d-none d-sm-inline mx-1">{{ name }}</span>
             </a>
             <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
-                <li><a class="dropdown-item" href="#">Profile</a></li>
-                <li><a class="dropdown-item" href="#">Notifications</a></li>
-                <li>
-                    <hr class="dropdown-divider">
-                </li>
+                <li><router-link to="/settings" class="dropdown-item">Settings</router-link></li>
+                <!-- <li><a class="dropdown-item" href="#">Notifications</a></li> -->
+                <li><hr class="dropdown-divider"></li>
                 <li><router-link to="/logout" class="dropdown-item">Sign out</router-link></li>
             </ul>
         </div>
         <div v-else class="pb-4">
             <router-link to="/login" class="d-flex align-items-center text-white text-decoration-none">Sign in</router-link>
-            <router-link to="/register" class="d-flex align-items-center text-white text-decoration-none">Create Account</router-link>
         </div>
     </nav>
 </template>

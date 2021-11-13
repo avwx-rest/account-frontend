@@ -1,5 +1,5 @@
 import { Commit, Module } from "vuex"
-import { User, UserNotification } from "@/models/user"
+import { User, UserNotification, UserUpdate } from "@/models/user"
 import TokenApi from '@/services/token.service'
 import UserApi from '@/services/user.service'
 import { Plan } from "@/models/plan"
@@ -42,6 +42,10 @@ export const user: Module<UserState, any> = {
         },
         async getUser({ commit }: { commit: Commit }): Promise<void> {
             const user = await UserApi.getUser()
+            commit('getUserSuccess', user)
+        },
+        async updateUser({ commit }: { commit: Commit }, form: UserUpdate): Promise<void> {
+            const user = await UserApi.updateUser(form)
             commit('getUserSuccess', user)
         },
         async getTokens({ commit }: { commit: Commit }): Promise<void> {

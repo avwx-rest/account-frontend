@@ -19,6 +19,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons"
 import {
     faCheckCircle as farCheckCircle,
+    faEnvelope as farEnvelope,
+    faEnvelopeOpen as farEnvelopeOpen,
     faTimesCircle as farTimesCircle,
 } from "@fortawesome/free-regular-svg-icons"
 import {
@@ -32,6 +34,8 @@ library.add(
     faConciergeBell,
     faCreditCard,
     faEdit,
+    farEnvelope,
+    farEnvelopeOpen,
     // faHistory,
     faKey,
     faPlus,

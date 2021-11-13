@@ -40,6 +40,12 @@ const routes: RouteRecordRaw[] = [
         component: () => import(/* webpackChunkName: "forgot-password" */ '../views/ForgotPassword.vue'),
         meta: { guest: true },
     },
+    {
+        path: '/settings',
+        name: 'Settings',
+        component: () => import(/* webpackChunkName: "settings" */ '../views/Settings.vue'),
+        meta: { requiresAuth: true },
+    },
     // API Tokens
     {
         path: '/tokens',

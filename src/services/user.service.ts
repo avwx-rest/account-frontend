@@ -1,5 +1,5 @@
 import axios from './api'
-import { UserNotification, User } from '@/models/user'
+import { UserNotification, User, UserUpdate } from '@/models/user'
 
 interface StripePortal {
     url: string
@@ -8,6 +8,11 @@ interface StripePortal {
 class UserApi {
     public async getUser(): Promise<User> {
         const data = await axios.get<User>('user')
+        return data.data
+    }
+
+    public async updateUser(user: UserUpdate): Promise<User> {
+        const data = await axios.patch<User>('user', user)
         return data.data
     }
 
@@ -28,6 +33,11 @@ class UserApi {
     public async stripePortal(): Promise<string | null> {
         const data = await axios.get<StripePortal>('stripe/portal')
         return data.data?.url
+    }
+
+    public async mailing(subscribe: boolean): Promise<void> {
+        const method = subscribe ? axios.post : axios.delete
+        await method<void>('mail/list')
     }
 }
 
