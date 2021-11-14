@@ -40,26 +40,22 @@ export default class ApiCodeSampleForm extends Vue {
         return this.$store.state.auth.loggedIn
     }
 
-    get token(): string {
-        let token
-        if (this.loggedIn) {
-            const firstToken = this.$store.state.user.tokens[0]
-            if (firstToken) token = firstToken.value
-        }
-        return token || 'Your_Token_Value_Here'
-    }
-
     public setCode(): void {
-        console.log(this.language.value)
+        let token
+        if (this.loggedIn) token = this.$store.state.user.tokens[0]
+        const value = token?.value || 'Your_Token_Value_Here'
+        const name = token?.name || 'token'
         switch(this.language.value) {
             case 'bash':
-                this.code = `curl --request GET \\
+                this.code = `# Value of ${name}
+curl --request GET \\
   --url 'https://avwx.rest/api/metar/KMCO' \\
-  --header 'Authorization: BEARER ${this.token}'`
+  --header 'Authorization: BEARER ${value}'`
                 break
             case 'javascript':
                 this.code = `const icao = 'KMCO'
-const token = '${this.token}'
+// Value of ${name}
+const token = '${value}'
 const resp = axios.get('https://avwx.rest/api/metar/' + icao, {
     headers: {
         Authorization: 'BEARER ' + token
@@ -69,7 +65,8 @@ console.log(resp.data)`
                 break
             case 'python':
                 this.code = `icao = "KMCO"
-token = "${this.token}"
+# Value of ${name}
+token = "${value}"
 resp = httpx.get("https://avwx.rest/api/metar/" + icao, headers={
     "Authorization": "BEARER " + token
 })
