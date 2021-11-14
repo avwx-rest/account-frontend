@@ -1,9 +1,9 @@
 <template>
     <div>
-        <select v-model="language" class="form-select">
+        <select v-model="language" v-on:change="setCode" class="form-select">
             <option v-for="lang in languages" :key="lang.display" :value="lang" :selected="language && language.value == lang.value">{{ lang.display }}</option>
         </select>
-        <Prism :language="language.value">{{ code }}</prism>
+        <Prism :key="code" :language="language.value">{{ code }}</prism>
     </div>
 </template>
 
@@ -11,7 +11,7 @@
 import { Options, Vue } from 'vue-class-component'
 import Prism from 'vue-prism-component'
 import 'prismjs'
-import 'prismjs/components/prism-shell-session.min.js'
+import 'prismjs/components/prism-bash.min.js'
 import 'prismjs/components/prism-python.min.js'
 import 'prismjs/themes/prism.css'
 
@@ -21,9 +21,9 @@ interface LanguageOption {
 }
 
 const languages: LanguageOption[] = [
-    { display: 'Python', value: 'python' },
-    { display: 'cURL', value: 'shell-session' },
+    { display: 'cURL', value: 'bash' },
     { display: 'Javascript', value: 'javascript' },
+    { display: 'Python', value: 'python' },
 ]
 
 @Options({
@@ -34,6 +34,7 @@ const languages: LanguageOption[] = [
 export default class ApiCodeSampleForm extends Vue {
     languages = languages
     language = languages[0]
+    code = ''
 
     get loggedIn(): boolean {
         return this.$store.state.auth.loggedIn
@@ -48,31 +49,40 @@ export default class ApiCodeSampleForm extends Vue {
         return token || 'Your_Token_Value_Here'
     }
 
-    // NOTE: Code Prism section is not yet refreshing after language change
-    get code(): string {
+    public setCode(): void {
         console.log(this.language.value)
         switch(this.language.value) {
-            case 'shell-session':
-                return `curl --request GET \\
+            case 'bash':
+                this.code = `curl --request GET \\
   --url 'https://avwx.rest/api/metar/KMCO' \\
   --header 'Authorization: BEARER ${this.token}'`
+                break
             case 'javascript':
-                return `const icao = 'KMCO'
+                this.code = `const icao = 'KMCO'
 const token = '${this.token}'
-axios.get('https://avwx.rest/api/metar/' + icao, {
+const resp = axios.get('https://avwx.rest/api/metar/' + icao, {
     headers: {
         Authorization: 'BEARER ' + token
     }
-})`
+})
+console.log(resp.data)`
+                break
             case 'python':
-                return `icao = "KMCO"
+                this.code = `icao = "KMCO"
 token = "${this.token}"
-httpx.get("https://avwx.rest/api/metar/" + icao, headers={
+resp = httpx.get("https://avwx.rest/api/metar/" + icao, headers={
     "Authorization": "BEARER " + token
-})`
+})
+print(resp.json())`
+                break
             default:
-                return 'None'
+                this.code = 'None'
+                break
         }
+    }
+
+    public mounted(): void {
+        this.setCode()
     }
 }
 </script>
