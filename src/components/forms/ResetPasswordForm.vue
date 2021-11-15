@@ -26,6 +26,7 @@ import { useToast } from 'vue-toastification'
 import axios, { AxiosError } from 'axios'
 import * as yup from 'yup'
 import YupPassword from 'yup-password'
+import Alert from '@/components/Alert.vue'
 import RegisterApi from '@/services/register.service'
 
 YupPassword(yup)
@@ -40,6 +41,7 @@ interface ResetData {
         token: String,
     },
     components: {
+        Alert,
         Form,
         Field,
         ErrorMessage,
@@ -64,13 +66,12 @@ export default class ResetPasswordForm extends Vue {
                 this.$router.push("/login")
             },
             (error: Error | AxiosError) => {
+                this.isSubmitting = false
                 console.log(error)
                 if (axios.isAxiosError(error)) {
-                    console.log("handle known error code")
                     console.log(error.response?.data)
-                    this.errorText = "error"
+                    this.errorText = error.response?.data?.detail || "An unknown error occurred"
                 } else {
-                    console.log("unknown error occured")
                     this.errorText = "An unknown error occurred"
                 }
             }

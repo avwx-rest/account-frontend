@@ -6,7 +6,7 @@
             <ErrorMessage name="email" id="emailHelp" class="form-text text-muted" />
         </div>
         <div v-if="errorText.length > 0" class="form-group">
-            <p>{{ errorText }}</p>
+            <Alert type="danger" :text="errorText" />
         </div>
         <div class="form-group">
             <button type="submit" name="action" :disabled="isSubmitting" class="btn btn-primary">Send Reset Email</button>
@@ -20,6 +20,7 @@ import { Field, Form, ErrorMessage } from 'vee-validate'
 import { useToast } from 'vue-toastification'
 import axios, { AxiosError } from 'axios'
 import * as yup from 'yup'
+import Alert from '@/components/Alert.vue'
 import RegisterApi from '@/services/register.service'
 
 interface ForgotData {
@@ -28,6 +29,7 @@ interface ForgotData {
 
 @Options({
     components: {
+        Alert,
         Form,
         Field,
         ErrorMessage,
@@ -49,13 +51,12 @@ export default class ForgotPasswordForm extends Vue {
                 this.$router.push("/")
             },
             (error: Error | AxiosError) => {
+                this.isSubmitting = false
                 console.log(error)
                 if (axios.isAxiosError(error)) {
-                    console.log("handle known error code")
                     console.log(error.response?.data)
-                    this.errorText = "error"
+                    this.errorText = error.response?.data?.detail || "An unknown error occurred"
                 } else {
-                    console.log("unknown error occured")
                     this.errorText = "An unknown error occurred"
                 }
             }

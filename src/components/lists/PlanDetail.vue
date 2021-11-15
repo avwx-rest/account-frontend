@@ -101,6 +101,7 @@ button {
 .plan-free {
     .card-header {
         background-color: white;
+        color: black;
     }
 }
 

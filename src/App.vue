@@ -50,6 +50,10 @@ footer {
     margin-left: -12px;
 }
 
+a {
+    color: #4f68ae !important;
+}
+
 .btn-primary {
     background-color: #4f68ae !important;
     border-color: #4f68ae !important;

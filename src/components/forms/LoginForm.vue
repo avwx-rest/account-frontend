@@ -11,7 +11,7 @@
             <ErrorMessage name="password" id="passwordHelp" class="form-text text-muted" />
         </div>
         <div v-if="errorText.length > 0" class="form-group">
-            <p>{{ errorText }}</p>
+            <Alert type="danger" :text="errorText" />
         </div>
         <div class="form-group">
             <button type="submit" name="action" :disabled="isSubmitting" class="btn btn-primary">Login</button>
@@ -25,9 +25,11 @@ import { Field, Form, ErrorMessage } from 'vee-validate'
 import axios, { AxiosError } from 'axios'
 import * as yup from 'yup'
 import { Login as LoginData } from '@/models/auth'
+import Alert from '@/components/Alert.vue'
 
 @Options({
     components: {
+        Alert,
         Form,
         Field,
         ErrorMessage,
@@ -47,13 +49,12 @@ export default class LoginForm extends Vue {
         this.$store.dispatch('auth/login', creds).then(
             () => this.$emit('forward'),
             (error: Error | AxiosError) => {
+                this.isSubmitting = false
                 console.log(error)
                 if (axios.isAxiosError(error)) {
-                    console.log("handle known error code")
                     console.log(error.response?.data)
-                    this.errorText = "error"
+                    this.errorText = error.response?.data?.detail || "An unknown error occurred"
                 } else {
-                    console.log("unknown error occured")
                     this.errorText = "An unknown error occurred"
                 }
             }

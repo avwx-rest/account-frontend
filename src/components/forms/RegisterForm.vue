@@ -16,7 +16,7 @@
             <ErrorMessage name="confirm" id="confirmHelp" class="form-text text-muted" />
         </div>
         <div v-if="errorText.length > 0" class="form-group">
-            <p>{{ errorText }}</p>
+            <Alert type="danger" :text="errorText" />
         </div>
         <div class="form-group">
             <button type="submit" name="action" :disabled="isSubmitting" class="btn btn-primary">Register</button>
@@ -31,6 +31,7 @@ import { useToast } from 'vue-toastification'
 import axios, { AxiosError } from 'axios'
 import * as yup from 'yup'
 import YupPassword from 'yup-password'
+import Alert from '@/components/Alert.vue'
 import { Login } from '@/models/auth'
 
 YupPassword(yup)
@@ -41,6 +42,7 @@ interface RegisterData extends Login {
 
 @Options({
     components: {
+        Alert,
         Form,
         Field,
         ErrorMessage,
@@ -65,13 +67,12 @@ export default class RegisterForm extends Vue {
                 this.$router.push("/login")
             },
             (error: Error | AxiosError) => {
+                this.isSubmitting = false
                 console.log(error)
                 if (axios.isAxiosError(error)) {
-                    console.log("handle known error code")
                     console.log(error.response?.data)
-                    this.errorText = "error"
+                    this.errorText = error.response?.data?.detail || "An unknown error occurred"
                 } else {
-                    console.log("unknown error occured")
                     this.errorText = "An unknown error occurred"
                 }
             }

@@ -1,6 +1,6 @@
 <template>
     <div v-if="token.length == 0">
-        <h1>Forget Password</h1>
+        <h1>Forgot Password</h1>
         <ForgotPasswordForm />
     </div>
     <div v-else>

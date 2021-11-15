@@ -14,18 +14,13 @@ export const auth: Module<AuthState, any> = {
     },
     actions: {
         async register({ commit }: { commit: Commit }, form: Login): Promise<void> {
-            RegisterApi.register(form).then(
-                () => commit('registerSuccess'),
-                (error) => console.log(error),
-            )
+            await RegisterApi.register(form)
+            commit('registerSuccess')
         },
         async login({ commit, dispatch }: { commit: Commit, dispatch: Dispatch }, form: Login): Promise<void> {
-            AuthApi.login(form).then(
-                (auth) => {
-                    commit('loginSuccess', auth)
-                    dispatch('user/getUser', null, {root: true})
-                },
-            )
+            const auth = await AuthApi.login(form)
+            commit('loginSuccess', auth)
+            dispatch('user/getUser', null, {root: true})
         },
         logout({ commit }: { commit: Commit }): void {
             commit('logout')
