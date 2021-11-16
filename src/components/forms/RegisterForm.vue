@@ -32,11 +32,11 @@ import axios, { AxiosError } from 'axios'
 import * as yup from 'yup'
 import YupPassword from 'yup-password'
 import Alert from '@/components/Alert.vue'
-import { Login } from '@/models/auth'
+import { Register } from '@/models/auth'
 
 YupPassword(yup)
 
-interface RegisterData extends Login {
+interface RegisterData extends Register {
     confirm: string
 }
 
@@ -59,9 +59,16 @@ export default class RegisterForm extends Vue {
     })
     toast = useToast()
 
-    public register(form: RegisterData): void {
+    public async register(form: RegisterData): Promise<void> {
         this.isSubmitting = true
-        this.$store.dispatch('auth/register', form).then(
+        await this.$recaptchaLoaded()
+        const data: Register = {
+            email: form.email,
+            password: form.password,
+            token: await this.$recaptcha('login'),
+        }
+        console.log(data)
+        this.$store.dispatch('auth/register', data).then(
             () => {
                 this.toast.success('Registered. Check your email to continue')
                 this.$router.push("/login")

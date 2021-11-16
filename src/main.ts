@@ -1,5 +1,6 @@
 import { createApp } from 'vue'
 import Toast, { PluginOptions as ToastOptions, POSITION } from 'vue-toastification'
+import { VueReCaptcha } from 'vue-recaptcha-v3'
 import App from './App.vue'
 import router from './router'
 import store from './store'
@@ -19,5 +20,6 @@ createApp(App)
     .use(store)
     .use(router)
     .use(Toast, toastDefaults)
+    .use(VueReCaptcha, { siteKey: process.env.RECAPTCHA_PUBLIC_KEY })
     .component("font-awesome-icon", FontAwesomeIcon)
     .mount('#app')

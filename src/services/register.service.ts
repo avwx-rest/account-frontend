@@ -1,9 +1,9 @@
 import axios from './api'
-import { Login } from '@/models/auth'
+import { Register } from '@/models/auth'
 import { User } from '@/models/user'
 
 class RegisterApi {
-    public async register(form: Login): Promise<User> {
+    public async register(form: Register): Promise<User> {
         const data = await axios.post<User>('register', form)
         return data.data
     }
