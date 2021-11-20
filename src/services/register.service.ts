@@ -8,6 +8,11 @@ class RegisterApi {
         return data.data
     }
 
+    public async verifyEmail(token: string): Promise<void> {
+        const url = 'mail/verify/'+token
+        await axios.post<void>(url)
+    }
+
     public async forgotPassword(email: string): Promise<void> {
         const url = 'register/forgot-password'
         await axios.post<void>(url, { email }, {

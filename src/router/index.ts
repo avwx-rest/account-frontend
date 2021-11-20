@@ -41,6 +41,12 @@ const routes: RouteRecordRaw[] = [
         meta: { guest: true },
     },
     {
+        path: '/verify-email',
+        name: 'Verify Email',
+        component: () => import(/* webpackChunkName: "verify-email" */ '../views/VerifyEmail.vue'),
+        meta: { guest: true },
+    },
+    {
         path: '/settings',
         name: 'Settings',
         component: () => import(/* webpackChunkName: "settings" */ '../views/Settings.vue'),
@@ -81,6 +87,11 @@ const routes: RouteRecordRaw[] = [
         component: () => import(/* webpackChunkName: "stripe-f" */ '../views/Stripe.vue'),
         props: { success: false },
         meta: { requiresAuth: true },
+    },
+    {
+        path: '/:catchAll(.*)', 
+        name: 'NotFound',
+        component: () => import(/* webpackChunkName: "not-found" */ '../views/NotFound.vue'),
     },
 ]
 
