@@ -8,6 +8,11 @@ class RegisterApi {
         return data.data
     }
 
+    public async requestVerify(email: string): Promise<void> {
+        const url = 'mail/verify'
+        await axios.post<void>(url, { email })
+    }
+
     public async verifyEmail(token: string): Promise<void> {
         const url = 'mail/verify/'+token
         await axios.post<void>(url)

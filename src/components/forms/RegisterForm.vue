@@ -67,7 +67,6 @@ export default class RegisterForm extends Vue {
             password: form.password,
             token: await this.$recaptcha('login'),
         }
-        console.log(data)
         this.$store.dispatch('auth/register', data).then(
             () => {
                 this.toast.success('Registered. Check your email to continue')

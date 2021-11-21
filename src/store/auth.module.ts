@@ -15,6 +15,7 @@ export const auth: Module<AuthState, any> = {
     actions: {
         async register({ commit }: { commit: Commit }, form: Register): Promise<void> {
             await RegisterApi.register(form)
+            await RegisterApi.requestVerify(form.email)
             commit('registerSuccess')
         },
         async login({ commit, dispatch }: { commit: Commit, dispatch: Dispatch }, form: Login): Promise<void> {
