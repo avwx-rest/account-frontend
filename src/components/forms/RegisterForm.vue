@@ -80,6 +80,7 @@ export default class RegisterForm extends Vue {
                     this.errorText = error.response?.data?.detail || "An unknown error occurred"
                 } else {
                     this.errorText = "An unknown error occurred"
+                    throw error
                 }
             }
         )
