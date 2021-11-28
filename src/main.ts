@@ -3,7 +3,8 @@ import Toast, { PluginOptions as ToastOptions, POSITION } from 'vue-toastificati
 import { VueReCaptcha } from 'vue-recaptcha-v3'
 import setupAuthInterceptors from '@/services/setupInterceptors'
 import { FontAwesomeIcon } from './plugins/font-awesome'
-import * as rollbar from '@/plugins/rollbar'
+import { rollbar } from '@/plugins/rollbar'
+import { LogArgument } from 'rollbar'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap'
 import 'vue-toastification/dist/index.css'
@@ -24,8 +25,8 @@ const app = createApp(App)
     .use(VueReCaptcha, { siteKey: process.env.RECAPTCHA_PUBLIC_KEY })
     .component("font-awesome-icon", FontAwesomeIcon)
 
-app.config.errorHandler = (err, vm) => {
-    vm?.$rollbar.error(err)
+app.config.errorHandler = (err) => {
+    rollbar.error(err as LogArgument)
     throw err
 }
 
