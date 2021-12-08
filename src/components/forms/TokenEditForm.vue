@@ -12,7 +12,7 @@
         <span class="td form-group">
             <button type="submit" name="action" :disabled="isSubmitting" class="btn btn-primary"><font-awesome-icon icon="check-circle" /></button>
             <button @click="cancel" :disabled="isSubmitting" class="btn btn-primary"><font-awesome-icon icon="times-circle" /></button>
-            <button @click="deleteToken" :disabled="isSubmitting" class="btn btn-primary"><font-awesome-icon icon="trash" /></button>
+            <button @click="deleteToken" :disabled="isSubmitting" class="btn btn-danger"><font-awesome-icon icon="trash" /></button>
         </span>
     </Form>
 </template>

@@ -55,9 +55,10 @@ export default class ForgotPasswordForm extends Vue {
                 console.log(error)
                 if (axios.isAxiosError(error)) {
                     console.log(error.response?.data)
-                    this.errorText = error.response?.data?.detail || "An unknown error occurred"
+                    this.errorText = error.response?.data?.detail || "An unknown server error occurred"
                 } else {
                     this.errorText = "An unknown error occurred"
+                    throw error
                 }
             }
         )

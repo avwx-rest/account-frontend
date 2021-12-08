@@ -93,4 +93,10 @@ a {
     border-color: #4f68ae !important;
     color: #4f68ae !important;
 }
+
+.form-group {
+    .text-muted {
+        color: red !important;
+    }
+}
 </style>
