@@ -37,5 +37,6 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           cname: 'account.avwx.rest'
         env:
+          BASE_URL: '/'
           RECAPTCHA_PUBLIC_KEY: ${{ secrets.RECAPTCHA_PUBLIC_KEY }}
           ROLLBAR_API_KEY: ${{ secrets.ROLLBAR_API_KEY }}
