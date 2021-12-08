@@ -23,6 +23,12 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
+      - id: Copy-Index
+        uses: canastro/copy-file-action@master
+        with:
+          source: "public/index.html"
+          target: "public/404.html"
+
       - id: Build-Vue
         uses: xRealNeon/VuePagesAction@1.0.0
         with:
