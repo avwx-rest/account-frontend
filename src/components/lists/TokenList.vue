@@ -10,7 +10,7 @@
         </div>
 
         <div class="tbody">
-            <TokenRow v-for="token in tokens" :key="token" v-show="tokens.length > 0" v-bind:token="token" @reload="fetchTokens" class="tr" />
+            <TokenRow v-for="token in tokens" :key="token" v-show="tokens.length > 0" :token="token" @reload="fetchTokens" class="tr" />
         </div>
     </div>
 </template>

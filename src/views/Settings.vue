@@ -3,7 +3,7 @@
         <Header title="Settings" />
 
         <main>
-            <Profile v-if="currentUser" v-bind:user="currentUser" />
+            <Profile v-if="currentUser" :user="currentUser" />
 
             <section>
                 <h2>Notifications</h2>

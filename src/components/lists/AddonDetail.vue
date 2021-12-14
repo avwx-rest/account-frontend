@@ -1,6 +1,6 @@
 <template>
     <div class="col">
-        <div class="card mb-4 rounded-3 shadow-sm" v-bind:class="{ 'card-added': userHasAddon }">
+        <div class="card mb-4 rounded-3 shadow-sm" :class="{ 'card-added': userHasAddon }">
             <div class="card-header py-3">
                 <h4 class="my-0 fw-normal">{{ addon.name }}</h4>
             </div>

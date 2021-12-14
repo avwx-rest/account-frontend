@@ -3,7 +3,7 @@
         <CancelPlanModal @close="showCancelModal = false" @cancel="cancelPlan()" @change="switchPlan('free')" />
         <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
             <div v-for="key in keys" :key="key">
-                <PlanDetail v-if="plans[key]" v-bind:plan="plans[key]" @switchPlan="switchPlan" />
+                <PlanDetail v-if="plans[key]" :plan="plans[key]" @switchPlan="switchPlan" />
             </div>
         </div>
     </div>
