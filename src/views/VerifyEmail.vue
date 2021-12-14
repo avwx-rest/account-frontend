@@ -2,6 +2,10 @@
     <div>
         <p>Verifying...</p>
         <p v-if="errorText.length > 0">{{ errorText }}</p>
+        <p v-if="showVerifyEmail">
+            It looks like your verification code is out of date.<br/>
+            <VerifyEmailForm email="" />
+        </p>
     </div>
 </template>
 
@@ -10,10 +14,16 @@ import { Options, Vue } from 'vue-class-component'
 import { useToast } from 'vue-toastification'
 import axios, { AxiosError } from 'axios'
 import RegisterApi from '@/services/register.service'
+import VerifyEmailForm from '@/components/forms/VerifyEmailForm.vue'
 
-@Options({})
+@Options({
+    components: {
+        VerifyEmailForm,
+    }
+})
 export default class VerifyEmail extends Vue {
     errorText = ''
+    showVerifyEmail = false
     toast = useToast()
 
     public mounted(): void {
@@ -27,7 +37,11 @@ export default class VerifyEmail extends Vue {
                 console.log(error)
                 if (axios.isAxiosError(error)) {
                     console.log(error.response?.data)
-                    this.errorText = error.response?.data?.detail || "An unknown error occurred"
+                    if (error.response?.status == 401 || error.response?.status == 422) {
+                        this.showVerifyEmail = true
+                    } else {
+                        this.errorText = error.response?.data?.detail || "An unknown error occurred"
+                    }
                 } else {
                     this.errorText = "An unknown error occurred"
                 }

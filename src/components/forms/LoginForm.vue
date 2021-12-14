@@ -16,7 +16,6 @@
         <div class="form-group">
             <button type="submit" name="action" :disabled="isSubmitting" class="btn btn-primary">Login</button>
         </div>
-        <VerifyEmailForm v-if="verifyEmail.length > 0" v-bind:email="verifyEmail" />
     </Form>
 </template>
 
@@ -27,7 +26,6 @@ import axios, { AxiosError } from 'axios'
 import * as yup from 'yup'
 import { Login as LoginData } from '@/models/auth'
 import Alert from '@/components/Alert.vue'
-import VerifyEmailForm from '@/components/forms/VerifyEmailForm.vue'
 
 @Options({
     components: {
@@ -35,9 +33,8 @@ import VerifyEmailForm from '@/components/forms/VerifyEmailForm.vue'
         Form,
         Field,
         ErrorMessage,
-        VerifyEmailForm,
     },
-    emits: ['forward'],
+    emits: ['forward', 'verify'],
 })
 export default class LoginForm extends Vue {
     verifyEmail = ''
@@ -59,7 +56,7 @@ export default class LoginForm extends Vue {
                     console.log(error.response?.data)
                     const errorText = error.response?.data?.detail || "An unknown server error occurred"
                     if (error.response?.status == 400 && errorText == "Email is not yet verified") {
-                        this.verifyEmail = creds.email
+                        this.$emit('verify', creds.email)
                     } else {
                         this.errorText = errorText
                     }
