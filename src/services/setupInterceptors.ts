@@ -1,6 +1,15 @@
 import axiosInstance from './api'
 import AuthApi from './auth.service'
 
+function urlShouldRefresh(endpoint: any): boolean {
+    if (typeof endpoint != 'string') return false
+    const url = endpoint as string
+    if (url == 'auth/login' || url == 'auth/refresh') return false
+    if (url.startsWith('mail/verify')) return false
+    if (url.startsWith('register/reset-password')) return false
+    return true
+}
+
 export default function setup(): void {
     axiosInstance.interceptors.request.use(
         (config) => {
@@ -20,7 +29,7 @@ export default function setup(): void {
         async (err) => {
             const originalConfig = err.config
 
-            if ((originalConfig.url !== 'auth/login' && originalConfig.url !== 'auth/refresh') && err.response) {
+            if (urlShouldRefresh(originalConfig.url) && err.response) {
                 // Access Token was expired
                 if ((err.response.status === 401 || err.response.status === 422) && !originalConfig._retry) {
                     originalConfig._retry = true
