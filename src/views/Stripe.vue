@@ -16,7 +16,10 @@ export default class Stripe extends Vue {
 
     public mounted(): void {
         UserApi.stripeSuccess(this.success).then(
-            () => this.$router.push('/'),
+            () => {
+                this.$store.dispatch('user/getUser')
+                this.$router.push('/plans')
+            },
             (error) => console.log(error)
         )
     }
