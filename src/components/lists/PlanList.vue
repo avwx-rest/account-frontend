@@ -63,6 +63,7 @@ export default class PlanList extends Vue {
         PlanApi.cancelPlan().then(
             () => {
                 this.toast.success('Your plan has been cancelled')
+                CancelPlanModal.hideModal()
                 this.reloadUser()
             },
             (error) => {

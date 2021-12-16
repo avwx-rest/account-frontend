@@ -17,7 +17,7 @@ export default function setup(): void {
             if (token) {
                 if (!config.headers) config.headers = {}
                 config.headers['Authorization'] = 'Bearer ' + token
-                // config.headers['Access-Control-Allow-Origin'] = '*'
+                config.headers['Access-Control-Allow-Origin'] = '*'
             }
             return config
         },

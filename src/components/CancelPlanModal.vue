@@ -30,5 +30,11 @@ export default class CancelPlanModal extends Vue {
     get userHasAddons(): boolean {
         return this.$store.state.user.addons.length > 0
     }
+
+    public static hideModal(): void {
+        const modal = document.getElementById('cancelPlanModal')
+        if (modal) modal.remove()
+        for (const item of document.getElementsByClassName('modal-backdrop')) item.remove()
+    }
 }
 </script>
