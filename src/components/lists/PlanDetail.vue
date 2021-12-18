@@ -19,7 +19,7 @@
                 <ul class="list-unstyled mt-3 mb-4">
                     <li v-show="plan.preface"><b>{{ plan.preface }}</b></li>
                     <li v-for="link in plan.links" :key="link">
-                        <a v-if="link.link" href="link.link">{{ link.text }}</a>
+                        <a v-if="link.link" :href="link.link">{{ link.text }}</a>
                         <div v-else>{{ link.text }}</div>
                     </li>
                     <li><b>{{ callCount }}</b> calls per day</li>
