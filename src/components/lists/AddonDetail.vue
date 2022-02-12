@@ -7,9 +7,10 @@
             <div class="card-body">
                 <p>{{ addon.description }}</p>
                 <div v-if="loggedIn">
-                    <button v-if="userHasAddon" @click="removeAddon" class="btn btn-secondary">Remove</button>
-                    <button v-else @click="addAddon" class="btn btn-primary">Add to plan</button>
+                    <button v-if="userHasAddon" @click="removeAddon" class="w-100 btn btn-lg btn-secondary">Remove</button>
+                    <button v-else @click="addAddon" class="w-100 btn btn-lg btn-primary">Add to plan</button>
                 </div>
+                <button v-if="addon.documentation" @click="openDocs" class="w-100 btn btn-lg btn-primary">Documentation</button>
             </div>
         </div>
     </div>
@@ -46,7 +47,12 @@ export default class AddonDetail extends Vue {
     }
 
     get userHasAddon(): boolean {
-        return this.userKeys.includes(this.addon.key)
+        return true
+        // return this.userKeys.includes(this.addon.key)
+    }
+
+    public openDocs(): void {
+        if (this.addon.documentation) location.href = this.addon.documentation
     }
 
     public addAddon(): void {
