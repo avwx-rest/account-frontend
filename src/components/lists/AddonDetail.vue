@@ -47,8 +47,7 @@ export default class AddonDetail extends Vue {
     }
 
     get userHasAddon(): boolean {
-        return true
-        // return this.userKeys.includes(this.addon.key)
+        return this.userKeys.includes(this.addon.key)
     }
 
     public openDocs(): void {
