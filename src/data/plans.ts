@@ -14,6 +14,7 @@ export const PLANS: { [key: string]: PlanDisplayData} = {
         preface: "All Hobby features +",
         links: [
             {text: "PIREP", link: "https://avwx.docs.apiary.io/#reference/0/pirep"},
+            {text: "AIR / SIGMET", link: "https://avwx.docs.apiary.io/#reference/0/airsigmet"},
             {text: "NBM", link: "https://avwx.docs.apiary.io/#reference/0/nbm"},
             {text: "GFS", link: "https://avwx.docs.apiary.io/#reference/0/gfs"},
             {text: "Multiple Reports", link: "https://avwx.docs.apiary.io/#reference/0/multiple-reports"},
