@@ -25,6 +25,7 @@ export const PLANS: { [key: string]: PlanDisplayData} = {
     "enterprise": {
         preface: "All Pro features +",
         links: [
+            {text: "NOTAM", link: "https://avwx.docs.apiary.io/#reference/0/notam"},
             {text: "Flight Routing", link: "https://avwx.docs.apiary.io/#reference/0/report-routing"},
             {text: "Historic Reports", link: "https://avwxhistory.docs.apiary.io"},
             {text: "Priority Support"},
