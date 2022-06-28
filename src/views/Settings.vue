@@ -15,12 +15,15 @@
                     <font-awesome-icon :icon="['far', 'envelope']" /> Subscribe
                 </button>
             </section>
+
+            <DangerZone v-if="currentUser" />
         </main>
     </div>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
+import DangerZone from '@/components/DangerZone.vue'
 import Header from '@/components/Header.vue'
 import Profile from '@/components/Profile.vue'
 import { User } from '@/models/user'
@@ -28,6 +31,7 @@ import UserApi from '@/services/user.service'
 
 @Options({
     components: {
+        DangerZone,
         Header,
         Profile,
     }

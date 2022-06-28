@@ -16,6 +16,10 @@ class UserApi {
         return data.data
     }
 
+    public async deleteUser(): Promise<void> {
+        await axios.delete<void>('user')
+    }
+
     public async getNotifications(): Promise<UserNotification[]> {
         const data = await axios.get<UserNotification[]>('notification')
         return data.data
