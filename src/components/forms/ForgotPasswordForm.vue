@@ -15,9 +15,9 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component'
+import { Component, Vue, toNative } from 'vue-facing-decorator'
 import { Field, Form, ErrorMessage } from 'vee-validate'
-import { useToast } from 'vue-toastification'
+import { useToast } from 'vue-toast-notification'
 import axios, { AxiosError } from 'axios'
 import * as yup from 'yup'
 import Alert from '@/components/Alert.vue'
@@ -27,7 +27,7 @@ interface ForgotData {
     email: string
 }
 
-@Options({
+@Component({
     components: {
         Alert,
         Form,
@@ -35,7 +35,7 @@ interface ForgotData {
         ErrorMessage,
     }
 })
-export default class ForgotPasswordForm extends Vue {
+class ForgotPasswordForm extends Vue {
     errorText = ''
     isSubmitting = false
     schema = yup.object().shape({
@@ -64,6 +64,8 @@ export default class ForgotPasswordForm extends Vue {
         )
     }
 }
+
+export default toNative(ForgotPasswordForm)
 </script>
 
 <style lang="scss">

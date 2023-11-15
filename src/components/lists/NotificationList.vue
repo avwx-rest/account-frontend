@@ -9,24 +9,29 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component'
+import { Component, Vue, toNative } from 'vue-facing-decorator'
 import NotificationRow from '@/components/lists/NotificationRow.vue'
 import { UserNotification } from '@/models/user'
+import { useUserStore } from '@/stores/user.module'
 
-@Options({
+@Component({
     components: {
         NotificationRow,
     }
 })
-export default class NotificationList extends Vue {
+class NotificationList extends Vue {
     showList = false
 
+    userStore = useUserStore()
+
     get notifications(): UserNotification[] {
-        return this.$store.state.user.notifications
+        return this.userStore.notifications
     }
 
     public update(): void {
-        this.$store.dispatch('user/getNotifications')
+        this.userStore.getNotifications()
     }
 }
+
+export default toNative(NotificationList)
 </script>

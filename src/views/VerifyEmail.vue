@@ -10,18 +10,18 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component'
-import { useToast } from 'vue-toastification'
+import { Component, Vue, toNative } from 'vue-facing-decorator'
+import { useToast } from 'vue-toast-notification'
 import axios, { AxiosError } from 'axios'
 import RegisterApi from '@/services/register.service'
 import VerifyEmailForm from '@/components/forms/VerifyEmailForm.vue'
 
-@Options({
+@Component({
     components: {
         VerifyEmailForm,
     }
 })
-export default class VerifyEmail extends Vue {
+class VerifyEmail extends Vue {
     errorText = ''
     showVerifyEmail = false
     toast = useToast()
@@ -49,4 +49,6 @@ export default class VerifyEmail extends Vue {
         )
     }
 }
+
+export default toNative(VerifyEmail)
 </script>

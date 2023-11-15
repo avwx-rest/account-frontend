@@ -3,13 +3,14 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component'
+import { Component, Vue, toNative } from 'vue-facing-decorator'
 import { ChartItem } from 'chart.js'
 import { DateTime } from 'luxon'
-import { useToast } from 'vue-toastification'
+import { useToast } from 'vue-toast-notification'
 import { TokenUsage } from '@/models/token'
 import TokenApi from '@/services/token.service'
 import Chart from 'chart.js/auto'
+import { useUserStore } from '@/stores/user.module'
 
 interface ChartDataset {
     label: string
@@ -30,9 +31,10 @@ const COLORS = [
     'black',
 ]
 
-@Options({})
-export default class UsageChart extends Vue {
+@Component
+class UsageChart extends Vue {
     toast = useToast()
+    userStore = useUserStore()
 
     public mounted(): void {
         TokenApi.allHistory().then(
@@ -52,7 +54,7 @@ export default class UsageChart extends Vue {
     }
 
     private labelForToken(tokenId: string): string {
-        for (const token of this.$store.state.user.tokens) {
+        for (const token of this.userStore.tokens) {
             if (token._id == tokenId) return token.name
         }
         return 'Unknown'
@@ -94,4 +96,6 @@ export default class UsageChart extends Vue {
         })
     }
 }
+
+export default toNative(UsageChart)
 </script>

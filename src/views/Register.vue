@@ -9,15 +9,17 @@
 </template>
 
 <script lang=ts>
-import { Options, Vue } from 'vue-class-component'
+import { Component, Vue, toNative } from 'vue-facing-decorator'
 import Header from "@/components/Header.vue"
 import RegisterForm from '@/components/forms/RegisterForm.vue'
 
-@Options({
+@Component({
     components: {
         Header,
         RegisterForm,
     },
 })
-export default class Register extends Vue {}
+class Register extends Vue {}
+
+export default toNative(Register)
 </script>

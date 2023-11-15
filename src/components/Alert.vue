@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component'
+import { Component, Prop, Vue, toNative } from 'vue-facing-decorator'
 
 const icons: { [key: string]: string } = {
     'info': 'info-circle',
@@ -14,18 +14,17 @@ const icons: { [key: string]: string } = {
     'danger': 'times-circle',
 }
 
-@Options({
-    props: {
-        type: String,
-        text: String,
-    }
-})
-export default class Alert extends Vue {
+@Component
+class Alert extends Vue {
+    @Prop
     type!: string
+    @Prop
     text!: string
 
     get icon(): string {
         return icons[this.type] || 'bell'
     }
 }
+
+export default toNative(Alert)
 </script>

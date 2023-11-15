@@ -3,15 +3,20 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from "vue-class-component"
+import { useAuthStore } from "@/stores/auth.module"
+import { useUserStore } from "@/stores/user.module"
+import { Component, Vue, toNative } from "vue-facing-decorator"
 
-@Options({})
-export default class Home extends Vue {
+@Component
+class Logout extends Vue {
+    authStore = useAuthStore()
+    userStore = useUserStore()
+
     public created(): void {
         if (this.loggedIn) {
             Promise.all([
-                this.$store.dispatch('auth/logout'),
-                this.$store.dispatch('user/clear'),
+                this.authStore.logout(),
+                this.userStore.clear(),
             ]).then(
                 () => this.$router.push('/')
             )
@@ -21,7 +26,9 @@ export default class Home extends Vue {
     }
     
     get loggedIn(): boolean {
-        return this.$store.state.auth.loggedIn
+        return this.authStore.loggedIn
     }
 }
+
+export default toNative(Logout)
 </script>

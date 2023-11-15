@@ -17,19 +17,24 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component'
+import { Component, Vue, toNative } from 'vue-facing-decorator'
 import CurrentPlan from '@/components/CurrentPlan.vue'
 import TokenList from '@/components/lists/TokenList.vue'
+import { useUserStore } from '@/stores/user.module'
 
-@Options({
+@Component({
     components: {
         CurrentPlan,
         TokenList,
     }
 })
-export default class Manage extends Vue {
+class Tokens extends Vue {
+    userStore = useUserStore()
+
     public newToken(): void {
-        this.$store.dispatch('user/newToken')
+        this.userStore.newToken()
     }
 }
+
+export default toNative(Tokens)
 </script>

@@ -18,21 +18,17 @@
 </template>
 
 <script lang="ts">
-import { PropType } from 'vue'
-import { Options, Vue } from 'vue-class-component'
+import { Component, Prop, Vue, toNative } from 'vue-facing-decorator'
 import { Form, Field, ErrorMessage } from 'vee-validate'
 import * as yup from 'yup'
 import { Token, TokenUpdate } from '@/models/token'
 
-let emptyForm: TokenUpdate = {
+const emptyForm: TokenUpdate = {
     name: "",
     active: false,
 }
 
-@Options({
-    props: {
-        token: { type: Object as PropType<Token> },
-    },
+@Component({
     components: {
         Form,
         Field,
@@ -40,7 +36,8 @@ let emptyForm: TokenUpdate = {
     },
     emits: ["update", "cancel", "delete"],
 })
-export default class Plan extends Vue {
+class TokenEditForm extends Vue {
+    @Prop
     token!: Token
     form: TokenUpdate = emptyForm
     isSubmitting = false
@@ -72,4 +69,6 @@ export default class Plan extends Vue {
         this.$emit("delete")
     }
 }
+
+export default toNative(TokenEditForm)
 </script>

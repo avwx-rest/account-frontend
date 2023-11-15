@@ -7,19 +7,16 @@
 </template>
 
 <script lang="ts">
-import { PropType } from 'vue'
-import { Options, Vue } from 'vue-class-component'
+import { Component, Prop, Vue, toNative } from 'vue-facing-decorator'
 import { formatDistanceToNowStrict } from 'date-fns'
 import { UserNotification } from '@/models/user'
 import UserApi from '@/services/user.service'
 
-@Options({
-    props: {
-        notification: { type: Object as PropType<UserNotification> },
-    },
+@Component({
     emits: ['reload'],
 })
-export default class NotificationRow extends Vue {
+class NotificationRow extends Vue {
+    @Prop
     notification!: UserNotification
 
     get displayDate(): string {
@@ -34,4 +31,6 @@ export default class NotificationRow extends Vue {
         )
     }
 }
+
+export default toNative(NotificationRow)
 </script>

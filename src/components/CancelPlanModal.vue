@@ -1,9 +1,9 @@
 <template>
-    <div class="modal fade" id="cancelPlanModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="cancelPlanModal" tabindex="-1" aria-labelledby="planModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Cancel your Subscription?</h5>
+                    <h5 class="modal-title" id="planModalLabel">Cancel your Subscription?</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -21,20 +21,19 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component'
+import { useUserStore } from '@/stores/user.module'
+import { Component, Vue, toNative } from 'vue-facing-decorator'
 
-@Options({
+@Component({
     emits: ['cancel', 'change'],
 })
-export default class CancelPlanModal extends Vue {
-    get userHasAddons(): boolean {
-        return this.$store.state.user.addons.length > 0
-    }
+class CancelPlanModal extends Vue {
+    userStore = useUserStore()
 
-    public static hideModal(): void {
-        const modal = document.getElementById('cancelPlanModal')
-        if (modal) modal.remove()
-        for (const item of document.getElementsByClassName('modal-backdrop')) item.remove()
+    get userHasAddons(): boolean {
+        return this.userStore.addons.length > 0
     }
 }
+
+export default toNative(CancelPlanModal)
 </script>

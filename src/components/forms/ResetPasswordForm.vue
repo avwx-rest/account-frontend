@@ -20,9 +20,9 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component'
+import { Component, Prop, Vue, toNative } from 'vue-facing-decorator'
 import { Field, Form, ErrorMessage } from 'vee-validate'
-import { useToast } from 'vue-toastification'
+import { useToast } from 'vue-toast-notification'
 import axios, { AxiosError } from 'axios'
 import * as yup from 'yup'
 import YupPassword from 'yup-password'
@@ -36,10 +36,7 @@ interface ResetData {
     confirm: string
 }
 
-@Options({
-    props: {
-        token: String,
-    },
+@Component({
     components: {
         Alert,
         Form,
@@ -47,14 +44,15 @@ interface ResetData {
         ErrorMessage,
     }
 })
-export default class ResetPasswordForm extends Vue {
+class ResetPasswordForm extends Vue {
+    @Prop
     token!: string
     errorText = ''
     isSubmitting = false
 
     schema = yup.object().shape({
         password: yup.string().required('Password is required'),
-        confirm: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match'),
+        confirm: yup.string().oneOf([yup.ref('password'), undefined], 'Passwords must match'),
     })
     toast = useToast()
 
@@ -79,4 +77,6 @@ export default class ResetPasswordForm extends Vue {
         )
     }
 }
+
+export default toNative(ResetPasswordForm)
 </script>

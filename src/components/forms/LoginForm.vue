@@ -20,14 +20,15 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component'
+import { Component, Vue, toNative } from 'vue-facing-decorator'
 import { Field, Form, ErrorMessage } from 'vee-validate'
 import axios, { AxiosError } from 'axios'
 import * as yup from 'yup'
 import { Login as LoginData } from '@/models/auth'
 import Alert from '@/components/Alert.vue'
+import { useAuthStore } from '@/stores/auth.module'
 
-@Options({
+@Component({
     components: {
         Alert,
         Form,
@@ -36,7 +37,7 @@ import Alert from '@/components/Alert.vue'
     },
     emits: ['forward', 'verify'],
 })
-export default class LoginForm extends Vue {
+class LoginForm extends Vue {
     verifyEmail = ''
     errorText = ''
     isSubmitting = false
@@ -44,10 +45,11 @@ export default class LoginForm extends Vue {
         email: yup.string().email('Not a valid email').required('Email is required'),
         password: yup.string().required('Password is required'),
     })
+    authStore = useAuthStore()
 
     public handleLogin(creds: LoginData): void {
         this.isSubmitting = true
-        this.$store.dispatch('auth/login', creds).then(
+        this.authStore.login(creds).then(
             () => this.$emit('forward'),
             (error: Error | AxiosError) => {
                 this.isSubmitting = false
@@ -68,6 +70,8 @@ export default class LoginForm extends Vue {
         )
     }
 }
+
+export default toNative(LoginForm)
 </script>
 
 <style lang="scss">

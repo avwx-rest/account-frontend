@@ -1,9 +1,9 @@
 <template>
-    <div class="modal fade" id="deleteUserModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="deleteUserModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Delete Your Account?</h5>
+                    <h5 class="modal-title" id="deleteModalLabel">Delete Your Account?</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -21,22 +21,21 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component'
+import { useUserStore } from '@/stores/user.module'
+import { Component, Vue, toNative } from 'vue-facing-decorator'
 
-@Options({
+@Component({
     emits: ['delete'],
 })
-export default class DeleteUserModal extends Vue {
+class DeleteUserModal extends Vue {
     email = ''
 
-    get isDisabled(): boolean {
-        return this.$store.state.user.user.email != this.email
-    }
+    userStore = useUserStore()
 
-    public static hideModal(): void {
-        const modal = document.getElementById('deleteUserModal')
-        if (modal) modal.remove()
-        for (const item of document.getElementsByClassName('modal-backdrop')) item.remove()
+    get isDisabled(): boolean {
+        return this.userStore.user?.email != this.email
     }
 }
+
+export default toNative(DeleteUserModal)
 </script>

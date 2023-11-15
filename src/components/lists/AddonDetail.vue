@@ -17,29 +17,30 @@
 </template>
 
 <script lang="ts">
-import { PropType } from 'vue'
-import { Options, Vue } from 'vue-class-component'
-import { useToast } from 'vue-toastification'
+import { Component, Prop, Vue, toNative } from 'vue-facing-decorator'
+import { useToast } from 'vue-toast-notification'
 import { Addon } from '@/models/addon'
 import PlanApi from '@/services/plan.service'
+import { useAuthStore } from '@/stores/auth.module'
+import { useUserStore } from '@/stores/user.module'
 
-@Options({
-    props: {
-        addon: { type: Object as PropType<Addon> }
-    },
+@Component({
     emits: ['reloadUser'],
 })
-export default class AddonDetail extends Vue {
+class AddonDetail extends Vue {
+    @Prop
     addon!: Addon
 
     toast = useToast()
+    authStore = useAuthStore()
+    userStore = useUserStore()
 
     get loggedIn(): boolean {
-        return this.$store.state.auth.loggedIn
+        return this.authStore.loggedIn
     }
 
     get userAddons(): Addon[] {
-        return this.$store.state.user.addons || []
+        return this.userStore.addons || []
     }
 
     get userKeys(): string[] {
@@ -56,7 +57,7 @@ export default class AddonDetail extends Vue {
 
     public addAddon(): void {
         let newWindow: Window | null
-        if (!this.$store.state.user.user?.stripe?.subscription_id) newWindow = window.open()
+        if (!this.userStore.user?.stripe?.subscription_id) newWindow = window.open()
         PlanApi.addAddon(this.addon.key).then(
             (url) => {
                 if (url && newWindow) {
@@ -86,6 +87,8 @@ export default class AddonDetail extends Vue {
         )
     }
 }
+
+export default toNative(AddonDetail)
 </script>
 
 <style lang="scss">

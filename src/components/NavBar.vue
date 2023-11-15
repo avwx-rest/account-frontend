@@ -67,31 +67,36 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component'
+import { Component, Vue, toNative } from 'vue-facing-decorator'
 // import NotificationList from '@/components/NotificationList.vue'
 import UserApi from '@/services/user.service'
+import { useAuthStore } from '@/stores/auth.module'
+import { useUserStore } from '@/stores/user.module'
 
-@Options({
+@Component({
     components: {
         // NotificationList,
     }
 })
-export default class NavBar extends Vue {
+class NavBar extends Vue {
+    authStore = useAuthStore()
+    userStore = useUserStore()
+
     get loggedIn(): boolean {
-        return this.$store.state.auth.loggedIn
+        return this.authStore.loggedIn
     }
 
     get showBilling(): boolean {
-        return Boolean(this.$store.state.user.user?.stripe?.customer_id)
+        return Boolean(this.userStore.user?.stripe?.customer_id)
     }
 
     get name(): string {
-        return this.$store.state.user.user?.first_name || this.$store.state.user.user?.email || "User"
+        return this.userStore.user?.first_name || this.userStore.user?.email || "User"
     }
 
     public getBilling(): void {
         let newWindow: Window | null
-        if (this.$store.state.user.user?.stripe?.customer_id) newWindow = window.open()
+        if (this.userStore.user?.stripe?.customer_id) newWindow = window.open()
         UserApi.stripePortal().then(
             (url) => {
                 if (url && newWindow) {
@@ -102,6 +107,8 @@ export default class NavBar extends Vue {
         )
     }
 }
+
+export default toNative(NavBar)
 </script>
 
 <style lang="scss">

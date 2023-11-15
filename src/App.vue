@@ -5,24 +5,25 @@
                 <NavBar class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark" />
                 <main class="col py-3 overflow-scroll d-flex flex-column min-vh-100">
                     <router-view />
-                    <footer class="mt-auto">Copyright © 2022 duPont Technologies LLC</footer>
+                    <footer class="mt-auto">Copyright © 2023 duPont Technologies LLC</footer>
                 </main>
             </div>
         </div>
-        
     </div>
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component'
+import { Component, Vue, toNative } from 'vue-facing-decorator'
 import NavBar from '@/components/NavBar.vue'
 
-@Options({
+@Component({
     components: {
         NavBar,
     },
 })
-export default class App extends Vue {}
+class App extends Vue {}
+
+export default toNative(App)
 </script>
 
 <style lang="scss">
