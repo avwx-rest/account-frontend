@@ -1,3 +1,4 @@
+import { ref, Ref } from "vue"
 import { defineStore } from "pinia"
 import { User, UserNotification, UserUpdate } from "@/models/user"
 import TokenApi from '@/services/token.service'
@@ -7,29 +8,29 @@ import { Token } from "@/models/token"
 import { Addon } from "@/models/addon"
 
 interface UserState {
-    user?: User
-    plan?: Plan
-    tokens: Token[]
-    addons: Addon[]
-    notifications: UserNotification[]
+    user?: Ref<User>
+    plan?: Ref<Plan | undefined>
+    tokens: Ref<Token[]>
+    addons: Ref<Addon[]>
+    notifications: Ref<UserNotification[]>
 }
 
 function makeInitialState(): UserState {
     const userString = localStorage.getItem("user")
     if (!userString) {
         return {
-            tokens: [],
-            addons: [],
-            notifications: [],
+            tokens: ref([]),
+            addons: ref([]),
+            notifications: ref([]),
         }
     }
     const user = JSON.parse(userString) as User
     return {
-        user: user,
-        plan: user.plan,
-        tokens: user.tokens,
-        addons: user.addons,
-        notifications: user.notifications,
+        user: ref(user),
+        plan: ref(user.plan),
+        tokens: ref(user.tokens),
+        addons: ref(user.addons),
+        notifications: ref(user.notifications),
     }
 }
 

@@ -1,3 +1,4 @@
+import { ref, Ref } from "vue"
 import { defineStore } from "pinia"
 import { Login, Register } from "@/models/auth"
 import AuthApi from "@/services/auth.service"
@@ -5,12 +6,12 @@ import RegisterApi from "@/services/register.service"
 import { useUserStore } from "./user.module"
 
 export interface AuthState {
-    loggedIn: boolean
+    loggedIn: Ref<boolean>
 }
 
 export const useAuthStore = defineStore("auth", {
     state: (): AuthState => ({
-        loggedIn: AuthApi.accessToken != null
+        loggedIn: ref(AuthApi.accessToken != null)
     }),
     actions: {
         async register(form: Register): Promise<void> {
