@@ -3,11 +3,6 @@
 # abort on errors
 set -e
 
-# load .env
-if [ -f .env ]; then
-    export $(echo $(cat .env | sed 's/#.*//g'| xargs) | envsubst)
-fi
-
 # build
 npm run build
 

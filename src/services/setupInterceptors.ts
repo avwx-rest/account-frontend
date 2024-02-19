@@ -1,3 +1,4 @@
+import { useAuthStore } from '@/stores/auth.module'
 import axiosInstance from './api'
 import AuthApi from './auth.service'
 
@@ -40,6 +41,7 @@ export default function setup(): void {
 
                         return axiosInstance(originalConfig)
                     } catch (_error) {
+                        useAuthStore().logout()
                         Promise.reject(_error)
                     }
                 }
