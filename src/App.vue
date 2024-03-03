@@ -5,7 +5,7 @@
                 <NavBar class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark" />
                 <main class="col py-3 overflow-scroll d-flex flex-column min-vh-100">
                     <router-view />
-                    <footer class="mt-auto">Copyright © 2022 duPont Technologies LLC</footer>
+                    <footer class="mt-auto">Copyright © 2024 duPont Technologies LLC</footer>
                 </main>
             </div>
         </div>
