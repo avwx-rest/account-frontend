@@ -1,6 +1,6 @@
 <template>
     <section>
-        <DeleteUserModal @close="showDeleteModal = false" @delete="deleteUser()" />
+        <DeleteUserModal @delete="deleteUser()" />
         <h2 class="title-danger">Danger Zone</h2>
         <button class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#deleteUserModal"><font-awesome-icon icon="trash" /> Delete Account</button>
     </section>
@@ -22,7 +22,6 @@ export default class DangerZone extends Vue {
     toast = useToast()
 
     public deleteUser(): void {
-        console.log("delete user")
         UserApi.deleteUser().then(
             () => {
                 Promise.all([

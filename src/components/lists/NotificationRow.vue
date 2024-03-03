@@ -27,7 +27,6 @@ export default class NotificationRow extends Vue {
     }
 
     public deleteNotification(): void {
-        console.log('Delete notification')
         UserApi.deleteNotification(this.notification).then(
             () => this.$emit('reload'),
             (error) => console.log(error),
