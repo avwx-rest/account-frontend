@@ -61,7 +61,7 @@
             </ul>
         </div>
         <div v-else class="pb-4">
-            <router-link to="/login" class="d-flex align-items-center text-white text-decoration-none">Sign in</router-link>
+            <router-link to="/login" class="d-flex align-items-center text-white text-decoration-none">Login - Register</router-link>
         </div>
     </nav>
 </template>
