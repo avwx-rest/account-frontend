@@ -8,18 +8,17 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component'
+import { Component, Prop, Vue, toNative } from 'vue-facing-decorator'
 
-@Options({
-    props: {
-        title: String,
-        subtitle: String,
-    }
-})
-export default class Header extends Vue {
+@Component
+class Header extends Vue {
+    @Prop
     title!: string
+    @Prop
     subtitle?: string
 }
+
+export default toNative(Header)
 </script>
 
 <style lang="scss">

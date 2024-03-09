@@ -51,25 +51,32 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component'
+import { Component, Vue, toNative } from 'vue-facing-decorator'
 import Header from '@/components/Header.vue'
 import ApiCodeSampleForm from '@/components/forms/ApiCodeSampleForm.vue'
+import { useAuthStore } from '@/stores/auth.module'
+import { useUserStore } from '@/stores/user.module'
 
-@Options({
+@Component({
     components: {
         ApiCodeSampleForm,
         Header,
     }
 })
-export default class GettingStarted extends Vue {
+class GettingStarted extends Vue {
+    authStore = useAuthStore()
+    userStore = useUserStore()
+
     get loggedIn(): boolean {
-        return this.$store.state.auth.loggedIn
+        return this.authStore.loggedIn
     }
 
     public newToken(): void {
-        this.$store.dispatch('user/newToken')
+        this.userStore.newToken()
     }
 }
+
+export default toNative(GettingStarted)
 </script>
 
 <style lang="scss">

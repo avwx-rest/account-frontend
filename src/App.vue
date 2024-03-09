@@ -9,20 +9,21 @@
                 </main>
             </div>
         </div>
-        
     </div>
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component'
+import { Component, Vue, toNative } from 'vue-facing-decorator'
 import NavBar from '@/components/NavBar.vue'
 
-@Options({
+@Component({
     components: {
         NavBar,
     },
 })
-export default class App extends Vue {}
+class App extends Vue {}
+
+export default toNative(App)
 </script>
 
 <style lang="scss">

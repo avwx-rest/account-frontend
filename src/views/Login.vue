@@ -15,13 +15,14 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from "vue-class-component"
+import { Component, Vue, toNative } from "vue-facing-decorator"
 import Header from "@/components/Header.vue"
 import Alert from '@/components/Alert.vue'
 import LoginForm from "@/components/forms/LoginForm.vue"
 import  VerifyEmailForm from "@/components/forms/VerifyEmailForm.vue"
+import { useAuthStore } from "@/stores/auth.module"
 
-@Options({
+@Component({
     components: {
         Alert,
         Header,
@@ -29,8 +30,10 @@ import  VerifyEmailForm from "@/components/forms/VerifyEmailForm.vue"
         VerifyEmailForm,
     }
 })
-export default class Home extends Vue {
+class Login extends Vue {
     verifyEmail = ''
+
+    authStore = useAuthStore()
 
     public forward(): void {
         this.$router.push(this.$route.params['nextUrl'] as string || '/')
@@ -47,7 +50,9 @@ export default class Home extends Vue {
     }
 
     get loggedIn(): boolean {
-        return this.$store.state.auth.loggedIn
+        return this.authStore.loggedIn
     }
 }
+
+export default toNative(Login)
 </script>

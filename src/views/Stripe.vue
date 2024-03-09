@@ -3,25 +3,27 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component'
+import { Component, Prop, Vue, toNative } from 'vue-facing-decorator'
 import UserApi from '@/services/user.service'
+import { useUserStore } from '@/stores/user.module'
 
-@Options({
-    props: {
-        success: Boolean,
-    }
-})
-export default class Stripe extends Vue {
+@Component
+class Stripe extends Vue {
+    @Prop
     success!: boolean
+
+    userStore = useUserStore()
 
     public mounted(): void {
         UserApi.stripeSuccess(this.success).then(
             () => {
-                this.$store.dispatch('user/getUser')
+                this.userStore.getUser()
                 this.$router.push('/plans')
             },
             (error) => console.log(error)
         )
     }
 }
+
+export default toNative(Stripe)
 </script>

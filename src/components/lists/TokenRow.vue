@@ -17,27 +17,23 @@
 </template>
 
 <script lang="ts">
-import { PropType } from 'vue'
-import { Options, Vue } from 'vue-class-component'
+import { Component, Prop, Vue, toNative } from 'vue-facing-decorator'
 import TokenEditForm from '@/components/forms/TokenEditForm.vue'
 import { Token, TokenUpdate } from '@/models/token'
 import TokenApi from '@/services/token.service'
 
-@Options({
-    props: {
-        token: { type: Object as PropType<Token> },
-    },
+@Component({
     components: {
         TokenEditForm,
     },
     emits: ["reload"],
 })
-export default class TokenRow extends Vue {
+class TokenRow extends Vue {
+    @Prop
     token!: Token
     edit = false
 
     public refreshToken(): void {
-        console.log("Refresh token")
         TokenApi.refreshToken(this.token).then(
             () => this.$emit('reload'),
             (error) => console.log(error),
@@ -66,8 +62,10 @@ export default class TokenRow extends Vue {
         )
     }
 
-    public history(): void {
-        console.log("Token History")
-    }
+    // public history(): void {
+    //     console.log("Token History")
+    // }
 }
+
+export default toNative(TokenRow)
 </script>

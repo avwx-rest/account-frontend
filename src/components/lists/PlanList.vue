@@ -1,6 +1,6 @@
 <template>
     <div>
-        <CancelPlanModal @close="showCancelModal = false" @cancel="cancelPlan()" @change="switchPlan('free')" />
+        <CancelPlanModal @cancel="cancelPlan()" @change="switchPlan('free')" />
         <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
             <div v-for="key in keys" :key="key">
                 <PlanDetail v-if="plans[key]" :plan="plans[key]" @switchPlan="switchPlan" />
@@ -10,39 +10,43 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component'
-import { useToast } from 'vue-toastification'
+import { Component, Vue, toNative } from 'vue-facing-decorator'
+import { useToast } from 'vue-toast-notification'
 import PlanDetail from '@/components/lists/PlanDetail.vue'
 import CancelPlanModal from '@/components/CancelPlanModal.vue'
 import { PlanMap } from '@/models/plan'
 import PlanApi from '@/services/plan.service'
+import { usePublicStore } from '@/stores/public.module'
+import { useUserStore } from '@/stores/user.module'
 
-@Options({
+@Component({
     components: {
         CancelPlanModal,
         PlanDetail,
     },
 })
-export default class PlanList extends Vue {
+class PlanList extends Vue {
     keys = ['free', 'pro', 'enterprise']
 
     toast = useToast()
+    publicStore = usePublicStore()
+    userStore = useUserStore()
 
     get plans(): PlanMap {
-        return this.$store.state.publicdata.plans
+        return this.publicStore.plans
     }
     
     public mounted(): void {
-        this.$store.dispatch('publicdata/getPlans')
+        this.publicStore.getPlans()
     }
 
     public reloadUser(): void {
-        this.$store.dispatch('user/getUser')
+        this.userStore.getUser()
     }
 
     public switchPlan(key: string): void {
         let newWindow: Window | null
-        if (!this.$store.state.user.user?.stripe?.subscription_id) newWindow = window.open()
+        if (!this.userStore.user?.stripe?.subscription_id) newWindow = window.open()
         PlanApi.changePlan(key).then(
             (url) => {
                 if (url && newWindow) {
@@ -59,11 +63,17 @@ export default class PlanList extends Vue {
         )
     }
 
+    public hideCancelModal(): void {
+        const modal = document.getElementById('cancelPlanModal')
+        if (modal) modal.remove()
+        for (const item of document.getElementsByClassName('modal-backdrop')) item.remove()
+    }
+
     public cancelPlan(): void {
         PlanApi.cancelPlan().then(
             () => {
                 this.toast.success('Your plan has been cancelled')
-                CancelPlanModal.hideModal()
+                this.hideCancelModal()
                 this.reloadUser()
             },
             (error) => {
@@ -73,4 +83,6 @@ export default class PlanList extends Vue {
         )
     }
 }
+
+export default toNative(PlanList)
 </script>

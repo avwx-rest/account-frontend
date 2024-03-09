@@ -5,8 +5,10 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component'
+import { Component, Vue, toNative } from 'vue-facing-decorator'
 
-@Options({})
-export default class NotFound extends Vue {}
+@Component
+class NotFound extends Vue {}
+
+export default toNative(NotFound)
 </script>

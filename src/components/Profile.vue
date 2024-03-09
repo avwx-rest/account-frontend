@@ -14,20 +14,17 @@
 </template>
 
 <script lang="ts">
-import { PropType } from 'vue'
-import { Options, Vue } from 'vue-class-component'
+import { Component, Prop, Vue, toNative } from 'vue-facing-decorator'
 import ProfileEdit from '@/components/forms/ProfileEdit.vue'
 import { User, UserUpdate } from '@/models/user'
 
-@Options({
-    props: {
-        user: { type: Object as PropType<User> }
-    },
+@Component({
     components: {
         ProfileEdit,
     },
 })
-export default class Settings extends Vue {
+class Profile extends Vue {
+    @Prop
     user!: User
     showProfileEdit = false
 
@@ -39,4 +36,6 @@ export default class Settings extends Vue {
         }
     }
 }
+
+export default toNative(Profile)
 </script>

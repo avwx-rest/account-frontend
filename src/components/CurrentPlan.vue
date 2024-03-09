@@ -5,13 +5,18 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component'
+import { Component, Vue, toNative } from 'vue-facing-decorator'
 import { Plan } from '@/models/plan'
+import { useUserStore } from '@/stores/user.module'
 
-@Options({})
-export default class CurrentPlan extends Vue {
+@Component
+class CurrentPlan extends Vue {
+    userStore = useUserStore()
+
     get plan(): Plan {
-        return this.$store.state.user.plan
+        return this.userStore.plan!
     }
 }
+
+export default toNative(CurrentPlan)
 </script>

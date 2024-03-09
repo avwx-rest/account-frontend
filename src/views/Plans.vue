@@ -13,17 +13,19 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component'
+import { Component, Vue, toNative } from 'vue-facing-decorator'
 import Header from '@/components/Header.vue'
 import AddonList from '@/components/lists/AddonList.vue'
 import PlanList from '@/components/lists/PlanList.vue'
 
-@Options({
+@Component({
     components: {
         AddonList,
         Header,
         PlanList,
     },
 })
-export default class Plans extends Vue {}
+class Plans extends Vue {}
+
+export default toNative(Plans)
 </script>

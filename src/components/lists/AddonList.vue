@@ -7,26 +7,33 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component'
+import { Component, Vue, toNative } from 'vue-facing-decorator'
 import { Addon } from '@/models/addon'
 import AddonRow from '@/components/lists/AddonDetail.vue'
+import { usePublicStore } from '@/stores/public.module'
+import { useUserStore } from '@/stores/user.module'
 
-@Options({
+@Component({
     components: {
         AddonRow,
     }
 })
-export default class AddonList extends Vue {
+class AddonList extends Vue {
+    publicStore = usePublicStore()
+    userStore = useUserStore()
+
     get addons(): Addon[] {
-        return this.$store.state.publicdata.addons
+        return this.publicStore.addons
     }
 
     public mounted(): void {
-        this.$store.dispatch('publicdata/getAddons')
+        this.publicStore.getAddons()
     }
 
     public reloadUser(): void {
-        this.$store.dispatch('user/getUser')
+        this.userStore.getUser()
     }
 }
+
+export default toNative(AddonList)
 </script>

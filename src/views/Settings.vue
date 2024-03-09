@@ -22,36 +22,41 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component'
+import { Component, Vue, toNative } from 'vue-facing-decorator'
 import DangerZone from '@/components/DangerZone.vue'
 import Header from '@/components/Header.vue'
 import Profile from '@/components/Profile.vue'
 import { User } from '@/models/user'
 import UserApi from '@/services/user.service'
+import { useUserStore } from '@/stores/user.module'
 
-@Options({
+@Component({
     components: {
         DangerZone,
         Header,
         Profile,
     }
 })
-export default class Settings extends Vue {
+class Settings extends Vue {
     isSubmitting = false
 
+    userStore = useUserStore()
+
     get currentUser(): User | undefined {
-        return this.$store.state.user.user
+        return this.userStore.user
     }
 
     public mailing(subscribe: boolean): void {
         this.isSubmitting = true
         UserApi.mailing(subscribe).then(
-            () => this.$store.dispatch('user/getUser').then(
+            () => this.userStore.getUser().then(
                 () => this.isSubmitting = false
             )
         )
     }
 }
+
+export default toNative(Settings)
 </script>
 
 <style lang="scss">

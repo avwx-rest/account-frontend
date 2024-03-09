@@ -3,12 +3,15 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component'
+import { useAuthStore } from '@/stores/auth.module'
+import { Component, Vue, toNative } from 'vue-facing-decorator'
 
-@Options({})
-export default class Home extends Vue {
+@Component
+class Home extends Vue {
+    authStore = useAuthStore()
+
     get loggedIn(): boolean {
-        return this.$store.state.auth.loggedIn
+        return this.authStore.loggedIn
     }
 
     public mounted(): void {
@@ -16,4 +19,6 @@ export default class Home extends Vue {
         this.$router.push(route)
     }
 }
+
+export default toNative(Home)
 </script>

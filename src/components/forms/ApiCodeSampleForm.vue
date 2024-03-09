@@ -8,12 +8,14 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component'
+import { Component, Vue, toNative } from 'vue-facing-decorator'
 import Prism from 'vue-prism-component'
 import 'prismjs'
 import 'prismjs/components/prism-bash.min.js'
 import 'prismjs/components/prism-python.min.js'
 import 'prismjs/themes/prism.css'
+import { Token } from '@/models/token'
+import { useUserStore } from '@/stores/user.module'
 
 interface LanguageOption {
     display: string
@@ -26,23 +28,24 @@ const languages: LanguageOption[] = [
     { display: 'Python', value: 'python' },
 ]
 
-@Options({
+@Component({
     components: {
         Prism,
     }
 })
-export default class ApiCodeSampleForm extends Vue {
+class ApiCodeSampleForm extends Vue {
     languages = languages
     language = languages[0]
     code = ''
 
-    get loggedIn(): boolean {
-        return this.$store.state.auth.loggedIn
+    userStore = useUserStore()
+
+    get userToken(): Token | undefined {
+        return this.userStore.user?.tokens[0]
     }
 
     public setCode(): void {
-        let token
-        if (this.loggedIn) token = this.$store.state.user.tokens[0]
+        const token = this.userToken
         const value = token?.value || 'Your_Token_Value_Here'
         const name = token?.name || 'token'
         switch(this.language.value) {
@@ -82,4 +85,6 @@ print(resp.json())`
         this.setCode()
     }
 }
+
+export default toNative(ApiCodeSampleForm)
 </script>

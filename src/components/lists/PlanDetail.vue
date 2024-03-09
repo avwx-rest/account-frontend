@@ -18,7 +18,7 @@
                 <h1 v-else class="card-title pricing-card-title">{{ monthlyPrice }}<small v-show="plan.price > 0" class="text-muted fw-light">/mo</small></h1>
                 <ul class="list-unstyled mt-3 mb-4">
                     <li v-show="plan.preface"><b>{{ plan.preface }}</b></li>
-                    <li v-for="link in plan.links" :key="link">
+                    <li v-for="link in plan.links" :key="link.text">
                         <a v-if="link.link" :href="link.link">{{ link.text }}</a>
                         <div v-else>{{ link.text }}</div>
                     </li>
@@ -37,25 +37,27 @@
 </template>
 
 <script lang="ts">
-import { PropType } from 'vue'
-import { Options, Vue } from 'vue-class-component'
+import { Component, Prop, Vue, toNative } from 'vue-facing-decorator'
 import { Plan, PlanData } from '@/models/plan'
+import { useAuthStore } from '@/stores/auth.module'
+import { useUserStore } from '@/stores/user.module'
 
-@Options({
-    props: {
-        plan: { type: Object as PropType<PlanData> }
-    },
+@Component({
     emits: ['switchPlan'],
 })
-export default class PlanDetail extends Vue {
+class PlanDetail extends Vue {
+    @Prop
     plan!: PlanData
 
+    authStore = useAuthStore()
+    userStore = useUserStore()
+
     get loggedIn(): boolean {
-        return this.$store.state.auth.loggedIn
+        return this.authStore.loggedIn
     }
 
     get userPlan(): Plan {
-        return this.$store.state.user.plan
+        return this.userStore.plan!
     }
 
     get styleName(): string {
@@ -91,6 +93,8 @@ export default class PlanDetail extends Vue {
         this.$emit('switchPlan', key)
     }
 }
+
+export default toNative(PlanDetail)
 </script>
 
 <style lang="scss">

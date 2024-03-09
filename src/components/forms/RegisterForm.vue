@@ -25,14 +25,15 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component'
+import { Component, Vue, toNative } from 'vue-facing-decorator'
 import { Form, Field, ErrorMessage } from 'vee-validate'
-import { useToast } from 'vue-toastification'
+import { useToast } from 'vue-toast-notification'
 import axios, { AxiosError } from 'axios'
 import * as yup from 'yup'
 import YupPassword from 'yup-password'
 import Alert from '@/components/Alert.vue'
 import { Register } from '@/models/auth'
+import { useAuthStore } from '@/stores/auth.module'
 
 YupPassword(yup)
 
@@ -40,7 +41,7 @@ interface RegisterData extends Register {
     confirm: string
 }
 
-@Options({
+@Component({
     components: {
         Alert,
         Form,
@@ -48,16 +49,17 @@ interface RegisterData extends Register {
         ErrorMessage,
     }
 })
-export default class RegisterForm extends Vue {
+class RegisterForm extends Vue {
     errorText = ''
     isSubmitting = false
 
     schema = yup.object().shape({
         email: yup.string().email('Not a valid email').required("Email is required"),
         password: yup.string().password().required("Password is required"),
-        confirm: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match'),
+        confirm: yup.string().oneOf([yup.ref('password'), undefined], 'Passwords must match'),
     })
     toast = useToast()
+    authStore = useAuthStore()
 
     public async register(form: RegisterData): Promise<void> {
         this.isSubmitting = true
@@ -67,7 +69,7 @@ export default class RegisterForm extends Vue {
             password: form.password,
             token: await this.$recaptcha('login'),
         }
-        this.$store.dispatch('auth/register', data).then(
+        this.authStore.register(data).then(
             () => {
                 this.toast.success('Registered. Check your email to continue')
                 this.$router.push("/login")
@@ -86,6 +88,8 @@ export default class RegisterForm extends Vue {
         )
     }
 }
+
+export default toNative(RegisterForm)
 </script>
 
 <style lang="scss">

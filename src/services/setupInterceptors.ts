@@ -1,7 +1,8 @@
+import { useAuthStore } from '@/stores/auth.module'
 import axiosInstance from './api'
 import AuthApi from './auth.service'
 
-function urlShouldRefresh(endpoint: any): boolean {
+function urlShouldRefresh(endpoint: string): boolean {
     if (typeof endpoint != 'string') return false
     const url = endpoint as string
     if (url == 'auth/login' || url == 'auth/refresh') return false
@@ -15,7 +16,6 @@ export default function setup(): void {
         (config) => {
             const token = config.url == 'auth/refresh' ? AuthApi.refreshToken : AuthApi.accessToken
             if (token) {
-                if (!config.headers) config.headers = {}
                 config.headers['Authorization'] = 'Bearer ' + token
                 config.headers['Access-Control-Allow-Origin'] = '*'
             }
@@ -41,6 +41,7 @@ export default function setup(): void {
 
                         return axiosInstance(originalConfig)
                     } catch (_error) {
+                        useAuthStore().logout()
                         Promise.reject(_error)
                     }
                 }

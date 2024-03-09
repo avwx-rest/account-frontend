@@ -10,18 +10,21 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component'
+import { Component, Vue, toNative } from 'vue-facing-decorator'
 import ForgotPasswordForm from '@/components/forms/ForgotPasswordForm.vue'
 import ResetPasswordForm from '@/components/forms/ResetPasswordForm.vue'
+import { useAuthStore } from '@/stores/auth.module'
 
-@Options({
+@Component({
     components: {
         ForgotPasswordForm,
         ResetPasswordForm,
     }
 })
-export default class ForgotPassword extends Vue {
+class ForgotPassword extends Vue {
     token = ""
+
+    authStore = useAuthStore()
 
     public mounted(): void {
         this.token = this.$route.query.t as string || ""
@@ -34,7 +37,9 @@ export default class ForgotPassword extends Vue {
     }
     
     get loggedIn(): boolean {
-        return this.$store.state.auth.loggedIn
+        return this.authStore.loggedIn
     }
 }
+
+export default toNative(ForgotPassword)
 </script>

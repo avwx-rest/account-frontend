@@ -16,28 +16,33 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component'
+import { Component, Vue, toNative } from 'vue-facing-decorator'
 import TokenRow from '@/components/lists/TokenRow.vue'
 import { Token } from '@/models/token'
+import { useUserStore } from '@/stores/user.module'
 
-@Options({
+@Component({
     components: {
         TokenRow,
     },
 })
-export default class TokenList extends Vue {
+class TokenList extends Vue {
+userStore = useUserStore()
+
     get tokens(): Token[] {
-        return this.$store.state.user.tokens
+        return this.userStore.tokens
     }
 
     public fetchTokens(): void {
-        this.$store.dispatch('user/getTokens')
+        this.userStore.getTokens()
     }
 
     public mounted(): void {
         this.fetchTokens()
     }
 }
+
+export default toNative(TokenList)
 </script>
 
 <style lang="scss">

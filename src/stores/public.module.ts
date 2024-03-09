@@ -1,4 +1,4 @@
-import { Commit, Module } from 'vuex'
+import { defineStore } from 'pinia'
 import { PLANS } from '@/data/plans'
 import PlanApi from '@/services/plan.service'
 import { Plan, PlanMap } from "@/models/plan"
@@ -38,27 +38,16 @@ function expandPlans(plans: Plan[]): PlanMap {
     return out
 }
 
-export const publicdata: Module<PublicState, any> = {
-    namespaced: true,
-    state: makeInitialState(),
+export const usePublicStore = defineStore("publicdata", {
+    state: makeInitialState,
     actions: {
-        async getPlans({ commit }: { commit: Commit }): Promise<void> {
+        async getPlans(): Promise<void> {
             const plans = await PlanApi.getPlans()
-            commit('getPlansSuccess', expandPlans(plans))
+            this.plans = expandPlans(plans)
         },
-
-        async getAddons({ commit }: { commit: Commit }): Promise<void> {
+        async getAddons(): Promise<void> {
             const addons = await PlanApi.getAddons()
-            commit('getAddonsSuccess', addons)
-        },
-    },
-    mutations: {
-        getPlansSuccess(state: PublicState, plans: PlanMap): void {
-            state.plans = plans
-        },
-
-        getAddonsSuccess(state: PublicState, addons: Addon[]): void {
-            state.addons = addons
+            this.addons = addons
         }
     }
-}
+})

@@ -8,15 +8,17 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component'
+import { Component, Vue, toNative } from 'vue-facing-decorator'
 import Header from '@/components/Header.vue'
 import UsageChart from '@/components/UsageChart.vue'
 
-@Options({
+@Component({
     components: {
         Header,
         UsageChart,
     }
 })
-export default class ApiUsage extends Vue {}
+class ApiUsage extends Vue {}
+
+export default toNative(ApiUsage)
 </script>

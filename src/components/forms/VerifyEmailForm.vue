@@ -21,8 +21,8 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component'
-import { useToast } from 'vue-toastification'
+import { Component, Prop, Vue, toNative } from 'vue-facing-decorator'
+import { useToast } from 'vue-toast-notification'
 import { Field, Form, ErrorMessage } from 'vee-validate'
 import axios, { AxiosError } from 'axios'
 import * as yup from 'yup'
@@ -33,10 +33,7 @@ interface EmailForm {
     email?: string
 }
 
-@Options({
-    props: {
-        email: String
-    },
+@Component({
     components: {
         Alert,
         Form,
@@ -44,7 +41,8 @@ interface EmailForm {
         ErrorMessage,
     },
 })
-export default class VerifyEmailForm extends Vue {
+class VerifyEmailForm extends Vue {
+    @Prop
     email!: string
     errorText = ''
     isSubmitting = false
@@ -77,4 +75,6 @@ export default class VerifyEmailForm extends Vue {
         )
     }
 }
+
+export default toNative(VerifyEmailForm)
 </script>

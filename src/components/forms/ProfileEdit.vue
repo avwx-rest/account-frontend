@@ -26,18 +26,16 @@
 </template>
 
 <script lang="ts">
-import { PropType } from 'vue'
-import { Options, Vue } from 'vue-class-component'
+import { Component, Prop, Vue, toNative } from 'vue-facing-decorator'
 import { Field, Form, ErrorMessage } from 'vee-validate'
-import { useToast } from 'vue-toastification'
+import { useToast } from 'vue-toast-notification'
 import axios, { AxiosError } from 'axios'
 import * as yup from 'yup'
 import { UserUpdate } from '@/models/user'
+import { useUserStore } from '@/stores/user.module'
+import { useAuthStore } from '@/stores/auth.module'
 
-@Options({
-    props: {
-        user: { type: Object as PropType<UserUpdate> },
-    },
+@Component({
     components: {
         Form,
         Field,
@@ -45,12 +43,15 @@ import { UserUpdate } from '@/models/user'
     },
     emits: ['close'],
 })
-export default class ProfileEdit extends Vue {
+class ProfileEdit extends Vue {
+    @Prop
     user!: UserUpdate
     errorText = ''
     isSubmitting = false
 
     toast = useToast()
+    authStore = useAuthStore()
+    userStore = useUserStore()
 
     schema = yup.object().shape({
         email: yup.string().email('Not a valid email').required("Email is required"),
@@ -60,13 +61,13 @@ export default class ProfileEdit extends Vue {
 
     public updateUser(user: UserUpdate): void {
         this.isSubmitting = true
-        const oldEmail = this.$store.state.user.user.email.slice()
-        this.$store.dispatch('user/updateUser', user).then(
+        const oldEmail = this.userStore.user?.email.slice()
+        this.userStore.updateUser(user).then(
             () => {
                 if (user.email != oldEmail) {
                     Promise.all([
-                        this.$store.dispatch('auth/logout'),
-                        this.$store.dispatch('user/clear'),
+                        this.authStore.logout(),
+                        this.userStore.clear(),
                     ]).then(
                         () => {
                             this.toast.success("Successfully updated your email. You'll need to log back in to continue")
@@ -96,4 +97,6 @@ export default class ProfileEdit extends Vue {
         this.$emit('close')
     }
 }
+
+export default toNative(ProfileEdit)
 </script>
