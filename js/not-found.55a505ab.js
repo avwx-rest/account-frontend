@@ -1,0 +1,2 @@
+"use strict";(self["webpackChunkavwx_account"]=self["webpackChunkavwx_account"]||[]).push([[757],{5360:function(n,u,t){t.r(u),t.d(u,{default:function(){return i}});var e=t(641);const c=(0,e.Lk)("p",null,"Page could not be found",-1),a=[c];function r(n,u,t,c,r,l){return(0,e.uX)(),(0,e.CE)("div",null,a)}var l=t(1635),o=t(8490);let s=class extends o.lD{};s=(0,l.Cg)([o.uA],s);var d=(0,o.t$)(s),f=t(6262);const v=(0,f.A)(d,[["render",r]]);var i=v}}]);
+//# sourceMappingURL=not-found.55a505ab.js.map
