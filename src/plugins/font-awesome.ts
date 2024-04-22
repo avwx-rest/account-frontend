@@ -18,6 +18,7 @@ import {
     faTimesCircle,
     faTrash,
     faUserCircle,
+    faWorm,
 } from "@fortawesome/free-solid-svg-icons"
 import {
     faCheckCircle as farCheckCircle,
@@ -49,6 +50,7 @@ library.add(
     faTimesCircle,
     faTrash,
     faUserCircle,
+    faWorm,
     fabDev,
     farCheckCircle,
     farTimesCircle,

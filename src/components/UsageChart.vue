@@ -3,12 +3,10 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, toNative } from 'vue-facing-decorator'
+import { Component, Prop, Vue, toNative } from 'vue-facing-decorator'
 import { ChartItem } from 'chart.js'
 import { DateTime } from 'luxon'
-import { useToast } from 'vue-toast-notification'
 import { TokenUsage } from '@/models/token'
-import TokenApi from '@/services/token.service'
 import Chart from 'chart.js/auto'
 import { useUserStore } from '@/stores/user.module'
 
@@ -33,17 +31,12 @@ const COLORS = [
 
 @Component
 class UsageChart extends Vue {
-    toast = useToast()
+    @Prop
+    data!: TokenUsage[]
     userStore = useUserStore()
 
     public mounted(): void {
-        TokenApi.allHistory().then(
-            data => this.drawChart(data),
-            error => {
-                console.log(error)
-                this.toast.error('There was an error loading the usage data')
-            },
-        )
+        this.drawChart(this.data)
     }
 
     private dates(since = 30): DateTime[] {

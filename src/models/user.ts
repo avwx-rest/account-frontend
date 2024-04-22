@@ -25,6 +25,7 @@ export interface User extends UserUpdate {
     allow_overage: boolean
     subscribed: boolean
     disabled: boolean
+    is_admin: boolean
 
     stripe?: Stripe
     plan?: Plan
@@ -36,8 +37,9 @@ export interface User extends UserUpdate {
 export const emptyUser: User = {
     email: "",
     allow_overage: false,
-    disabled: false,
     subscribed: false,
+    disabled: false,
+    is_admin: false,
     addons: [],
     notifications: [],
     tokens: [],

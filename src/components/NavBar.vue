@@ -34,6 +34,11 @@
                     <font-awesome-icon icon="concierge-bell" class="fs-4" /> <span class="ms-1 d-none d-sm-inline">Support</span>
                 </a>
             </li>
+            <li v-if="canWiggle" class="nav-item">
+                <router-link to="/wiggle" class="nav-link">
+                    <font-awesome-icon icon="worm" class="fs-4" /> <span class="ms-1 d-none d-sm-inline">Wiggles</span>
+                </router-link>
+            </li>
             <!-- <li>
                 <a href="#submenu2" data-bs-toggle="collapse" class="nav-link align-middle dropdown-toggle">
                     <font-awesome-icon icon="credit-card" class="fs-4 " /> <span class="ms-1 d-none d-sm-inline">Pricing</span></a>
@@ -88,6 +93,10 @@ class NavBar extends Vue {
 
     get showBilling(): boolean {
         return Boolean(this.userStore.user?.stripe?.customer_id)
+    }
+
+    get canWiggle(): boolean {
+        return this.userStore.user?.is_admin || false
     }
 
     get name(): string {

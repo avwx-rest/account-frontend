@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import AuthApi from '@/services/auth.service'
+import { useUserStore } from '@/stores/user.module'
 import Home from '../views/Home.vue'
 import GettingStarted from '@/views/GettingStarted.vue'
 
@@ -88,6 +89,16 @@ const routes: RouteRecordRaw[] = [
         props: { success: false },
         meta: { requiresAuth: true },
     },
+
+    // Wiggle Service
+    {
+        path: '/wiggle', 
+        name: 'Wiggle',
+        component: () => import(/* webpackChunkName: "not-found" */ '../views/Wiggle.vue'),
+        meta: { mustWiggle: true },
+    },
+
+    // Util
     {
         path: '/:catchAll(.*)', 
         name: 'NotFound',
@@ -102,13 +113,19 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
     // Requires login
-    if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (to.matched.some(record => record.meta.requiresAuth || record.meta.mustWiggle)) {
         if (!AuthApi.accessToken) {
             next({
                 name: 'Login',
                 params: { nextUrl: to.fullPath }
             })
         } else {
+            if (to.matched.some(record => record.meta.mustWiggle)) {
+                const userStore = useUserStore()
+                if (!userStore.user?.is_admin) {
+                    next({ name: 'Tokens' })
+                }
+            }
             next()
         }
     // Requires not login
