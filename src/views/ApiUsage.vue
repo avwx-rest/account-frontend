@@ -3,7 +3,8 @@
         <Header title="API Usage" subtitle="Your daily API usage per token. All records are reported in UTC." />
         <main>
             <div v-if="data">
-                <UsageChart :data="data" />
+                <UsageChart v-if="data.length > 0" :data="data" />
+                <p v-else>No usage during this time period.</p>
             </div>
             <div v-else>
                 <p>Loading...</p>

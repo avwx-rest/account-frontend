@@ -5,7 +5,8 @@
             <Alert type="danger" :text="errorText" />
         </div>
         <div v-if="data">
-            <UsageChart :data="data" />
+            <UsageChart v-if="data.length > 0" :data="data" />
+            <p v-else>No usage during this time period.</p>
         </div>
         <div v-else-if="isSubmitting">
             <p>Loading...</p>
