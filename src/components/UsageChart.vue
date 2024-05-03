@@ -50,12 +50,12 @@ class UsageChart extends Vue {
         for (const token of this.userStore.tokens) {
             if (token._id == tokenId) return token.name
         }
-        return 'Unknown'
+        return tokenId
     }
 
     private datasetForToken(index: number, usage: TokenUsage, targets: string[]): ChartDataset {
         const counts: { [key: string]: number } = usage.days.reduce((obj, day) => {
-            return {...obj, [day.date]: day.count}
+            return {...obj, [day.date.slice(0, 10)]: day.count}
         }, {})
         const data = targets.map(date => counts[date] || 0)
         return {
